@@ -1,7 +1,7 @@
 import axios from "axios";
 import AuthService from "./auth.service";
 
-const BASE_URL = process.env.REACT_APP_API + "users/";
+const BASE_URL = "/api/users/";
 
 const headers = (token) => {
     return {

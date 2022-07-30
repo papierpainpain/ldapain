@@ -9,47 +9,39 @@ LDAPAIN se divise en deux partie :
 * Les **API** (serveur) : Qui gère les routes pour accéder aux fonctionnalities de ldap (en PHP) ;
 * Et le **Client** : L'interface web qui permet de gérer les comptes LDAP (en React).
 
-## Mise en place en local
+## Développement
 
-Clonez le projet puis suivez les instructions suivantes pour le serveur et le client.
+Clonez le projet puis suivez les instructions suivantes pour docker :
 
-### Serveur (PHP)
+* Installez docker et docker compose avec le [lien ici](https://docs.docker.com/engine/install/) ;
+* Puis dans le dossier du projet exécutez les commandes suivantes :
 
-Installation de PHP :
+    ```bash
+    docker-compose build --no-cache
+    docker-compose up -d
+    ```
 
-```bash
-sudo apt install php8.1 php8.1-mbstring php8.1-ldap
-```
+* Ajoutez le fichier de configuration des variables de l'environnement (`.env.local`) :
 
-Ensuite il faut configurer composer pour que la mise à jour des dépendances soit automatique. Pour cela vous pouvez aller directement à l'adresse suivante : <https://getcomposer.org/download/>
+    ```conf
+    APP_ENV="dev"
 
-Ensuite si vous mettez à jour l'arborescence de votre projet (les paths ou les namespaces), il faut lancer :
+    LDAP_HOST="<votre-ldap-host>"
+    LDAP_USERS_BASE="<votre-ldap-users-base>"
+    LDAP_GROUPS_BASE="<votre-ldap-groups-base>"
 
-```bash
-composer dump-autoload
-```
+    LDAP_ADMIN_USER="<votre-ldap-admin-user>"
+    LDAP_ADMIN_PASS="<votre-ldap-admin-pass>"
 
-### Client (React)
+    SMTP_HOST="smtp-mail.outlook.com"
+    SMTP_PORT="587"
+    SMTP_USER="<votre-mail>"
+    SMTP_PASS="<votre-mot-de-passe>"
 
-Installation de nodejs et react :
+    JWT_SECRET="<votre-secret>"
+    JWT_AUDIENCE="ldapain.papierpain.fr"
+    ```
 
-```bash
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-sudo apt-get install -y nodejs
-npm install -g create-react-app
-```
+## Sources
 
-Puis suivez les instructions suivantes :
-
-```bash
-npm install
-```
-
-### Lancement de l'application
-
-Pour lancer l'application, il faut lancer :
-
-```bash
-php -S localhost:8000 -t api/ # Pour le serveur
-npm start # Pour le client
-```
+* [React local development with docker compose](https://medium.com/bb-tutorials-and-thoughts/react-local-development-with-docker-compose-5a247710f997)

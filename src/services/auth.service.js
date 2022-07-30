@@ -1,7 +1,6 @@
 import axios from 'axios';
-// import jwtDecode from 'jwt-decode';
 
-const BASE_URL = process.env.REACT_APP_API;
+const BASE_URL = "/api/";
 
 const login = async (uid, password) => {
     const response = await axios({
