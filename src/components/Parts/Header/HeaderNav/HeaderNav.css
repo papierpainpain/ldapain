@@ -1,0 +1,59 @@
+ul.navHeader {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+ul.navHeader li {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+}
+
+ul.navHeader li:hover {
+    background-color: var(--header-alpha);
+    cursor: pointer;
+    color: var(--main);
+}
+
+ul.navHeader li.active {
+    color: var(--second);
+}
+
+ul.navHeader li a.navA {
+    height: calc(100% - 0.8em);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--white);
+    padding: 0.4em 1em;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out,
+        background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out;
+}
+
+ul.navHeader li:hover a.navA {
+    color: var(--main);
+}
+
+ul.navHeader a.navA:focus {
+    color: var(--main);
+}
+
+ul.navHeader li a.navA svg {
+    padding: 0.8em;
+    display: block;
+}
+
+ul.navHeader li a.navA p {
+    padding: 0;
+    margin: 0;
+    display: block;
+}

@@ -29,10 +29,27 @@ Ensuite si vous mettez à jour l'arborescence de votre projet (les paths ou les 
 composer dump-autoload
 ```
 
+### Client (React)
+
+Installation de nodejs et react :
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo apt-get install -y nodejs
+npm install -g create-react-app
+```
+
+Puis suivez les instructions suivantes :
+
+```bash
+npm install
+```
+
 ### Lancement de l'application
 
 Pour lancer l'application, il faut lancer :
 
 ```bash
 php -S localhost:8000 -t api/ # Pour le serveur
+npm start # Pour le client
 ```

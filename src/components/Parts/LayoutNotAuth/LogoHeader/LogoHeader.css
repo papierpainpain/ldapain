@@ -1,0 +1,33 @@
+header.logoHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: var(--header-height);
+    padding: 0.8em;
+}
+
+header.logoHeader img {
+    height: 100%;
+    width: auto;
+    padding: 0.4em;
+    padding-right: 1em;
+}
+
+header.logoHeader #navbrand-green {
+    font-weight: bold;
+    font-size: 1.8em;
+    color: var(--main);
+}
+
+header.logoHeader #navbrand-white {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: white;
+    align-self: end;
+}
+
+header.logoHeader #navbrand-orange {
+    color: var(--second);
+    font-size: 0.9em;
+    align-self: end;
+}
