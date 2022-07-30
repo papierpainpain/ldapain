@@ -1,64 +1,32 @@
 import { useState, useEffect, useContext } from 'react';
 import UsersService from '../../../services/users.service';
 import AuthContext from '../../../components/Auth/AuthContext';
-import Header from '../../../components/Parts/Header/Header';
-import {
-    Checkbox,
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
-} from '@mui/material';
-import TableHeader from './TableHeader/TableHeader';
+import Layout from '../../../components/Parts/Layout/Layout';
+import UsersTable from './UsersTable/UsersTable';
+import UsersNav from './UsersNav/UsersNav';
 
 const Users = () => {
     const { token } = useContext(AuthContext);
     const [users, setUsers] = useState([]);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
         UsersService.getAllUsers(token)
-            .then((users) => setUsers(users))
+            .then((users) => {
+                setUsers(users);
+                setPage(1);
+                setTotalPages(Math.ceil(users.length / 8));
+            })
             .catch((error) => console.log(error));
     }, [token]);
 
     return (
-        <div className="mainContainer">
-            <Header />
+        <Layout title="Users">
+            <UsersNav totalPages={totalPages} page={page} setPage={setPage} />
 
-            <main className="profile">
-                <h1>Users</h1>
-
-                <section>
-                    <div className="block">
-                        <Table>
-                            <TableHeader />
-
-                            <TableBody>
-                                {users.map((user) => (
-                                    <TableRow key={user.uid}>
-                                        <TableCell padding="checkbox">
-                                            <Checkbox color="primary" />
-                                        </TableCell>
-                                        <TableCell>
-                                            {user.uid}
-                                        </TableCell>
-                                        <TableCell>
-                                            {user.sn}
-                                        </TableCell>
-                                        <TableCell>
-                                            {user.cn}
-                                        </TableCell>
-                                        <TableCell>
-                                            {user.mail}
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </div>
-                </section>
-            </main>
-        </div>
+            <UsersTable users={users} page={page} />
+        </Layout>
     );
 };
 

@@ -166,7 +166,7 @@ const Profile = () => {
                             to="/change-password"
                             className="itemContent button"
                         >
-                            Changer le mot de passe
+                            Changer le mot de passe ›
                         </Link>
                     </div>
                 </div>

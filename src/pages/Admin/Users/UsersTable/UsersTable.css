@@ -1,0 +1,40 @@
+.userTableContainer {
+    height: 100%;
+    overflow-x: auto;
+}
+
+.userTableContainer table {
+    width: 100%;
+    height: 100%;
+}
+
+.userTableContainer th,
+.userTableContainer td {
+    padding: 0.8em;
+    text-align: start;
+}
+
+.userTableContainer td i {
+    margin-left: 0.4em;
+    opacity: 0.5;
+}
+
+.userTableContainer th {
+    color: var(--second);
+}
+
+.userTableContainer tbody th,
+.userTableContainer tbody td {
+    padding: 1.2em 0.8em;
+}
+
+.userTableContainer thead th {
+    color: var(--lightGray);
+}
+
+.userTableContainer td.actionList {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}

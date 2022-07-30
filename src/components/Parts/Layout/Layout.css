@@ -10,6 +10,7 @@
     display: flex;
     flex-direction: column;
     width: calc(100% - 4em);
+    overflow: auto;
 }
 
 .mainContainer main section {
@@ -21,10 +22,19 @@
 .mainContainer main section .block {
     background-color: var(--header-alpha);
     box-shadow: rgba(7, 7, 6, 0.15) 0px 0.5rem 1rem;
-    margin: auto;
+    margin: 0 auto auto;
     padding: 2em;
     width: calc(100% - 4em);
+    height: auto;
     max-width: 680px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.mainContainer main section .block.blockTable {
+    overflow: auto;
+    min-height: calc(80% - 4em);
 }
 
 @media screen and (max-width: 950px) {

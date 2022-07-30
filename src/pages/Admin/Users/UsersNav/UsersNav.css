@@ -1,0 +1,47 @@
+.usersNav {
+    display: flex;
+    padding: 0 0 1em;
+}
+
+.usersNav .userAddLink {
+    margin-right: auto;
+    height: 2em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--white);
+    text-decoration: none;
+}
+
+.usersNav .userAddLink:hover {
+    cursor: pointer;
+}
+
+.usersNav .userAddLink .addIcon {
+    height: 100%;
+    color: var(--main);
+    width: auto;
+    margin-right: 0.8em;
+
+    transition: all 0.4s ease-in-out;
+}
+
+.usersNav .userAddLink:hover .addIcon {
+    transform: rotate(180deg);
+    color: var(--second);
+}
+
+.usersNav .usersArrowPage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.usersNav .usersArrowPage > * {
+    margin: 0 0.4em;
+}
+
+.usersNav .usersArrowPage .arrowIcon:hover {
+    cursor: pointer;
+    color: var(--second);
+}

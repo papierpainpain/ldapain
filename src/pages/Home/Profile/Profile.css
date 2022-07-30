@@ -46,12 +46,20 @@ form.profileForm .row .item input.itemContent:read-only {
 }
 
 form.profileForm .row .item .button.itemContent {
-    background-color: var(--main);
-    color: var(--white);
+    /* background-color: var(--main);
+    color: var(--white); */
     text-decoration: none;
+    background: none;
+    box-shadow: none;
+    font-style: italic;
+    color: var(--second);
+    padding: 1em 0;
 }
 
-form.profileForm .row .item .button.itemContent:hover,
+form.profileForm .row .item .button.itemContent:hover {
+    color: var(--main);
+}
+
 form.profileForm button.submit:hover {
     background-color: var(--second);
 }

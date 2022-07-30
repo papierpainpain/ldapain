@@ -51,7 +51,16 @@ const AppRoutes = () => {
                         <Users />
                     </AuthRequire>
                 }
-            />
+            >
+                {/* <Route
+                    path="add"
+                    element={
+                        <AuthRequire requireRoles={['admin']}>
+                            <UserAdd />
+                        </AuthRequire>
+                    }
+                /> */}
+            </Route>
 
             <Route path="*" element={<NoMatch />} />
         </Routes>

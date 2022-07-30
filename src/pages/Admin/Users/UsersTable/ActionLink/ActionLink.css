@@ -1,0 +1,22 @@
+.userActionLink {
+    margin-right: 0.6em;
+    height: 2em;
+    width: 2em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--white);
+    text-decoration: none;
+
+    background-color: var(--main);
+    border-radius: 50%;
+}
+
+.userActionLink svg {
+    margin: auto;
+}
+
+.userActionLink:hover {
+    cursor: pointer;
+    background-color: var(--second);
+}
