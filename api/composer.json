@@ -1,0 +1,22 @@
+{
+    "name": "papierpain/ldapain",
+    "description": "LDAPain to manage ldap accounts",
+    "autoload": {
+        "psr-4": {
+            "Api\\": "api/",
+            "Api\\Controllers\\": "api/controllers/",
+            "Api\\Middlewares\\": "api/middlewares/",
+            "Api\\Models\\": "api/models/",
+            "Api\\Models\\Errors\\": "api/models/errors/",
+            "Api\\Models\\Ldap\\": "api/models/ldap/",
+            "Api\\Models\\Router\\": "api/models/router/"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.4",
+        "firebase/php-jwt": "^6.1",
+        "zircote/swagger-php": "^4.4",
+        "hackzilla/password-generator": "^1.6",
+        "phpmailer/phpmailer": "^6.6"
+    }
+}

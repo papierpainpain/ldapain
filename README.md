@@ -1,31 +1,38 @@
-# ldap-account-manager
+# LDAPAIN
 
-Liens :
+## Description
 
-- #<http://docs.switzernet.com/3/public/101010-ldap/>
-- <http://tutoriels.meddeb.net/openldap-password-policy/>
-- #<https://man7.org/linux/man-pages/man8/slapcat.8.html>
-- <https://gitlab.papierpain.fr/-/snippets/1>
-- <https://www.howtoforge.com/community/threads/openldap-install-fails-berklydb-configure-error-bdb-hdb-berkeleydb-not-availabl.54176/>
+Site web de gestion de comptes LDAP.
 
-## Setup en local
+LDAPAIN se divise en deux partie :
 
-- Cloner le projet ;
-- Setup composer :
+* Les **API** (serveur) : Qui gère les routes pour accéder aux fonctionnalities de ldap (en PHP) ;
+* Et le **Client** : L'interface web qui permet de gérer les comptes LDAP (en React).
+
+## Mise en place en local
+
+Clonez le projet puis suivez les instructions suivantes pour le serveur et le client.
+
+### Serveur (PHP)
+
+Installation de PHP :
 
 ```bash
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-php composer-setup.php
-php -r "unlink('composer-setup.php');"
-sudo mv composer.phar /usr/local/bin/composer
+sudo apt install php8.1 php8.1-mbstring php8.1-ldap
 ```
 
-- Si vous changez les paths ou namespaces :
+Ensuite il faut configurer composer pour que la mise à jour des dépendances soit automatique. Pour cela vous pouvez aller directement à l'adresse suivante : <https://getcomposer.org/download/>
+
+Ensuite si vous mettez à jour l'arborescence de votre projet (les paths ou les namespaces), il faut lancer :
 
 ```bash
 composer dump-autoload
 ```
 
-Pour que cela fonctionne, il vous faut également définir les variables d'environnement dans le fichier `env.php`.
-Supprimer la partie admin admin du fichier `app/models/Account.php` pour désactiver l'adminstration.
+### Lancement de l'application
+
+Pour lancer l'application, il faut lancer :
+
+```bash
+php -S localhost:8000 -t api/ # Pour le serveur
+```
