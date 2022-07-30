@@ -13,10 +13,21 @@ header.headerDesktop {
     justify-content: space-between;
 }
 
+header.headerDesktop .headerGif {
+    overflow: hidden;
+    margin: 1em;
+    max-height: 140px;
+}
+
+header.headerDesktop .headerGif figure {
+    height: 100%;
+    width: auto;
+}
+
 header.headerMobile {
     align-items: center;
     width: calc(100% - 2em);
-    
+
     background-color: var(--header-alpha);
     box-shadow: rgba(7, 7, 6, 0.15) 0px 0.5rem 1rem;
 

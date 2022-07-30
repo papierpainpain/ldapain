@@ -27,19 +27,19 @@
     max-width: 680px;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 950px) {
     .mainContainer main {
         padding: 1em;
         width: calc(100% - 2em);
         overflow-y: auto;
     }
 
+    .mainContainer {
+        flex-direction: column;
+    }
+
     .mainContainer main section {
         margin: 4em 0;
         height: auto;
-    }
-
-    .mainContainer {
-        flex-direction: column;
     }
 }

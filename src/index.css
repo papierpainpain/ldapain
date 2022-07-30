@@ -13,6 +13,7 @@
     --header-height: 80px;
     --green: #009384;
     --red: #d96565;
+    --mobile-width: 950px;
 }
 
 html {
@@ -92,7 +93,7 @@ h1:after {
     color: var(--white);
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 950px) {
     h1 {
         font-size: 1.8em;
     }

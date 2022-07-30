@@ -21,7 +21,7 @@ div.notAuthContainer section {
     margin: 0 4em;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 950px) {
     div.notAuthContainer div.container {
         flex-direction: column-reverse;
         align-items: center;
@@ -30,5 +30,6 @@ div.notAuthContainer section {
 
     div.notAuthContainer section {
         margin: 1em 0;
+        max-width: 400px;
     }
 }

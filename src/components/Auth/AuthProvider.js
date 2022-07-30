@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
         window.addEventListener(
             'resize',
             () => {
-                setIsMobile(window.innerWidth < 1200);
+                setIsMobile(window.innerWidth < 950);
             },
             [isMobile]
         );

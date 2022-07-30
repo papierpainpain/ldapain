@@ -92,7 +92,7 @@ section.secForm button:hover {
     background-color: var(--second);
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 950px) {
     section.secForm {
         width: calc(100% - 2em);
         padding: 1em;

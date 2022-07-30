@@ -1,6 +1,6 @@
 section.secFigure figure {
     margin: auto;
-    width: 500px;
+    width: 100%;
 }
 
 section.secFigure figure img {
@@ -10,7 +10,7 @@ section.secFigure figure img {
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 950px) {
     section.secFigure {
         display: none;
 

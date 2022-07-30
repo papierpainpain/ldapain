@@ -4,21 +4,26 @@ import './Header.css';
 import { useContext } from 'react';
 import AuthContext from '../../Auth/AuthContext';
 import { Link } from 'react-router-dom';
+import gif from './pika.gif';
 
 const Header = () => {
     const { isMobile } = useContext(AuthContext);
 
     return (
-        <header className={isMobile ? 'headerMobile' : 'headerDesktop'}>
+        <header
+            className={isMobile ? 'headerMobile' : 'headerDesktop'}
+        >
             <HeaderLogo />
 
             {!isMobile ? <HeaderNav /> : null}
 
-            <Link
-                to="/logout"
-                className="buttonLink"
-                role="button"
-            >
+            {!isMobile ? (
+                <div className="headerGif">
+                    <img src={gif} alt="gif" />
+                </div>
+            ) : null}
+
+            <Link to="/logout" className="buttonLink" role="button">
                 Déconnexion
             </Link>
         </header>

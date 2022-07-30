@@ -1,32 +1,31 @@
 .headerLogo {
     width: 100%;
     display: flex;
-    margin-bottom: 2.4em;
+    margin-bottom: 1.8em;
 }
 
 .headerLogo .caption {
     text-align: center;
-    font-size: 1.8em;
+    font-size: 1.2em;
     width: 100%;
 }
 
 .headerLogo .figure {
-    max-width: 160px;
-    margin: 1em 0;
-    padding: 0;
+    max-width: 120px;
     margin: auto;
+    width: 100%;
+    padding: 0;
     display: flex;
-    width: 160px;
     flex-direction: column;
 }
 
 .headerLogo .image {
-    padding: 1em;
-    width: calc(100% - 2em);
+    padding: 0 1.4em;
+    width: calc(100% - 2.8em);
     height: auto;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 950px) {
     .headerLogo {
         width: auto;
         height: auto;
