@@ -2,7 +2,10 @@
 
 namespace Api\Controllers;
 
+use Api\Models\Api;
 use Api\Models\Ldap\User;
+use Api\Models\Mail;
+use Api\Models\Password;
 
 /**
  * Class UserController
@@ -33,9 +36,9 @@ class UserController
         $users = $userObj->getAllUsers();
 
         if (count($users) > 0) {
-            self::send(200, $users);
+            Api::success(200, $users);
         } else {
-            self::send(404, ['error' => 'Aucun utilisateur trouvé']);
+            Api::error(404, 'Aucun utilisateur trouvé');
         }
     }
 
@@ -67,9 +70,9 @@ class UserController
         $user = $userObj->getUserById($uid);
 
         if ($user) {
-            self::send(200, $user);
+            Api::success(200, $user);
         } else {
-            self::send(404, ['error' => 'Utilisateur non trouvé']);
+            Api::error(404, 'Utilisateur non trouvé');
         }
     }
 
@@ -89,13 +92,12 @@ class UserController
      *              @OA\Property(property="uid", description="User uid", type="string"),
      *              @OA\Property(property="cn", description="Lastname", type="string"),
      *              @OA\Property(property="sn", description="Firstname", type="string"),
-     *              @OA\Property(property="mail", description="Email", type="string"),
-     *              @OA\Property(property="password", description="Password", type="string")
+     *              @OA\Property(property="mail", description="Email", type="string")
      *          )
      *      ),
      *      
      *      @OA\Response(response=201, description="User created"),
-     *      @OA\Response(response=400, description="Missing/Incorrect parameters"),
+     *      @OA\Response(response=400, description="Paramètres manquants (uid, cn, sn, mail)"),
      *      @OA\Response(response=403, description="Access denied"),
      *      @OA\Response(response=409, description="User already exists"),
      *      @OA\Response(response=500, description="Failed to create user")
@@ -105,8 +107,8 @@ class UserController
     {
         $params = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($params['uid']) || !isset($params['cn']) || !isset($params['sn']) || !isset($params['mail']) || !isset($params['password'])) {
-            self::send(400, ['error' => 'Paramètres manquants (uid, cn, sn, mail, password)']);
+        if (!isset($params['uid']) || !isset($params['cn']) || !isset($params['sn']) || !isset($params['mail'])) {
+            Api::error(400, 'Paramètres manquants (uid, cn, sn, mail)');
         }
 
         $userObj = new User($_ENV['LDAP_ADMIN_USER'], $_ENV['LDAP_ADMIN_PASS']);
@@ -114,17 +116,19 @@ class UserController
         $user = $userObj->getUserById($params['uid']);
 
         if ($user) {
-            self::send(409, ['error' => 'Utilisateur déjà existant']);
+            Api::error(409, 'Utilisateur déjà existant');
         } else {
-            if (self::checkPassword($params['password'])) {
-                $user = $userObj->createUser($params['uid'], $params['sn'], $params['cn'], $params['mail'], $params['password']);
+            try {
+                $password = Password::generate();
+                $user = $userObj->createUser($params['uid'], $params['sn'], $params['cn'], $params['mail'], $password);
                 if ($user) {
-                    self::send(201, $user);
+                    Mail::sendNewAccount($user['mail'], $user['uid'], $password);
+                    Api::success(201, 'Utilisateur créé');
                 } else {
-                    self::send(500, ['error' => 'Erreur lors de la création de l\'utilisateur']);
+                    Api::error(500, 'Erreur lors de la création de l\'utilisateur');
                 }
-            } else {
-                self::send(400, ['error' => 'Mot de passe invalide']);
+            } catch (\Exception $e) {
+                Api::error(401, $e->getMessage());
             }
         }
     }
@@ -166,7 +170,7 @@ class UserController
         $params = json_decode(file_get_contents('php://input'), true);
 
         if (!isset($params['cn']) && !isset($params['sn']) && !isset($params['password'])) {
-            self::send(400, ['error' => 'Paramètres manquants (cn, sn, password) au moins un doit être renseigné']);
+            Api::error(400, 'Paramètres manquants (cn, sn, password) au moins un doit être renseigné');
         }
 
         $userObj = new User($_ENV['LDAP_ADMIN_USER'], $_ENV['LDAP_ADMIN_PASS']);
@@ -174,15 +178,15 @@ class UserController
         if ($user) {
             if (self::checkPassword($params['password'])) {
                 if ($userObj->updateUser($user['dn'], $params['sn'] ?? $user['sn'], $params['cn'] ?? $user['cn'], $user['mail'], $params['password'] ?? null)) {
-                    self::send(200, ['success' => 'Utilisateur mis à jour']);
+                    Api::success(200, 'Utilisateur mis à jour');
                 } else {
-                    self::send(500, ['error' => 'Erreur lors de la mise à jour de l\'utilisateur']);
+                    Api::error(500, 'Erreur lors de la mise à jour de l\'utilisateur');
                 }
             } else {
-                self::send(400, ['error' => 'Mot de passe invalide (minimum de 8 caractères, au moins un caractère spécial, un chiffre, une lettre majuscule et une lettre minuscule)']);
+                Api::error(400, 'Mot de passe invalide (minimum de 8 caractères, au moins un caractère spécial, un chiffre, une lettre majuscule et une lettre minuscule)');
             }
         } else {
-            self::send(404, ['error' => 'Utilisateur non trouvé']);
+            Api::error(404, 'Utilisateur non trouvé');
         }
     }
 
@@ -206,12 +210,12 @@ class UserController
         $user = $userObj->getUserById($uid);
         if ($user) {
             if ($userObj->deleteUser($user['dn'])) {
-                self::send(200, ['success' => 'Utilisateur supprimé']);
+                Api::success(200, 'Utilisateur supprimé');
             } else {
-                self::send(500, ['error' => 'Erreur lors de la suppression de l\'utilisateur']);
+                Api::error(500, 'Erreur lors de la suppression de l\'utilisateur');
             }
         } else {
-            self::send(404, ['error' => 'Utilisateur non trouvé']);
+            Api::error(404, 'Utilisateur non trouvé');
         }
     }
 
@@ -230,12 +234,5 @@ class UserController
             return false;
         }
         return true;
-    }
-
-    private static function send($status, $data)
-    {
-        http_response_code($status);
-        echo json_encode($data);
-        exit();
     }
 }

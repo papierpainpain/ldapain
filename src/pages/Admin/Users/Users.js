@@ -22,7 +22,7 @@ const Users = () => {
     }, [token]);
 
     return (
-        <Layout title="Users">
+        <Layout title="Utilisateurs">
             <UsersNav totalPages={totalPages} page={page} setPage={setPage} />
 
             <UsersTable users={users} page={page} />

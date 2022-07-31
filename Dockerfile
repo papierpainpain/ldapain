@@ -37,6 +37,8 @@ RUN apk update && apk upgrade \
     && apk add php81-session php81-tokenizer \
     && apk add nodejs npm
 
+RUN npm install -g npm@8.15.1
+
 COPY ci/nginx.conf /etc/nginx/http.d/default.conf
 COPY ci/www.conf /etc/php81/php-fpm.d/www.conf
 

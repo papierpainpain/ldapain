@@ -1,0 +1,85 @@
+form.userAddForm {
+    display: flex;
+    flex-direction: column;
+}
+
+form.userAddForm .row {
+    display: flex;
+    flex-direction: row;
+    margin: 0.4em 0;
+}
+
+form.userAddForm .row .item {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 1.6em);
+    padding: 0.8em;
+}
+
+form.userAddForm button {
+    cursor: pointer;
+}
+
+form.userAddForm .row .item .itemTitle {
+    margin: 0;
+    padding: 0.8em 0;
+    color: var(--main);
+    font-size: 1.2em;
+}
+
+form.userAddForm .row .item .itemContent {
+    width: calc(100% - 1.6em);
+    background-color: #2e303e77;
+    padding: 1em 0.8em;
+    border: none;
+    border-radius: 0.4em;
+    color: var(--white);
+    font-size: 1em;
+    transition: border-color 0.15s ease-in-out;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+form.userAddForm .row .item .button.itemContent {
+    /* background-color: var(--main);
+    color: var(--white); */
+    text-decoration: none;
+    background: none;
+    box-shadow: none;
+    font-style: italic;
+    color: var(--second);
+    padding: 1em 0;
+}
+
+form.userAddForm .row .item .button.itemContent:hover {
+    color: var(--main);
+}
+
+form.userAddForm button.submit:hover {
+    background-color: var(--second);
+}
+
+form.userAddForm button.submit {
+    width: 60%;
+    background-color: var(--main);
+    color: var(--white);
+    padding: 1em 0.8em;
+    border: none;
+    border-radius: 0.4em;
+    font-size: 1em;
+    transition: background-color 0.15s ease-in-out;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    margin: auto;
+    transform: translateY(calc(50% + 2em));
+}
+
+@media screen and (max-width: 950px) {
+    form.userAddForm .row {
+        flex-direction: column;
+    }
+
+    form.userAddForm .row .item {
+        padding: 0;
+        width: 100%;
+    }
+}

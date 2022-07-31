@@ -14,10 +14,6 @@ class Mail
 {
     public static function sendPasswordReset(string $email, string $uid, string $password): void
     {
-        $email = filter_var(
-            trim($email),
-            FILTER_VALIDATE_EMAIL
-        );
         $uid = htmlspecialchars(
             trim($uid)
         );
@@ -25,9 +21,51 @@ class Mail
             trim($password)
         );
 
-        $message = 'LDAPain : Mot de passe réinitialisé : ' . $password . ' (uid : ' . $uid . '). ';
+        $message = 'Mot de passe réinitialisé, voici ton mot de passe : ' . $password . ' (uid : ' . $uid . '). ';
         $message .= 'Il doit être modifié après connexion ! 💂 Ici : https://ldapain.papierpain.fr/login';
 
+        $template = file_get_contents('api/views/emails/reset-password.html');
+        $template = str_replace('{{uid}}', $uid, $template);
+        $template = str_replace('{{password}}', $password, $template);
+
+        self::sendMail(
+            $email,
+            'Réinitialisation du mot de passe',
+            $message,
+            $template
+        );
+    }
+
+    public static function sendNewAccount(string $email, string $uid, string $password): void
+    {
+        $uid = htmlspecialchars(
+            trim($uid)
+        );
+        $password = htmlspecialchars(
+            trim($password)
+        );
+
+        $message = 'Bienvenue ' . $uid . ', voici ton mot de passe : ' . $password . '.';
+        $message .= 'Il doit être modifié après connexion ! 💂 Ici : https://ldapain.papierpain.fr/login';
+
+        $template = file_get_contents('api/views/emails/new-account.html');
+        $template = str_replace('{{uid}}', $uid, $template);
+        $template = str_replace('{{password}}', $password, $template);
+
+        self::sendMail(
+            $email,
+            'Nouveau compte LDAPain',
+            $message,
+            $template
+        );
+    }
+
+    private static function sendMail(string $email, string $subject, string $message, string $template): void
+    {
+        $email = filter_var(
+            trim($email),
+            FILTER_VALIDATE_EMAIL
+        );
 
         $mail = new PHPMailer(true);
 
@@ -49,14 +87,7 @@ class Mail
 
         //Content
         $mail->isHTML(true); //Set email format to HTML
-        $mail->Subject = $_ENV['APP_NAME'] . ' - Mot de passe réinitialisé';
-
-        // Get body from template file in views/emails/reset-password.html
-        $template = file_get_contents('api/views/emails/reset-password.html');
-        $template = str_replace('{{uid}}', $uid, $template);
-        $template = str_replace('{{password}}', $password, $template);
-
-
+        $mail->Subject = $_ENV['APP_NAME'] . ' - ' . $subject;
         $mail->Body = $template;
         $mail->AltBody = $message;
 
