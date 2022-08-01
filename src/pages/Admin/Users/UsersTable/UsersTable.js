@@ -1,6 +1,5 @@
 import {
     faArrowRotateForward,
-    faMarker,
     faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import ActionLink from './ActionLink/ActionLink';
@@ -29,10 +28,6 @@ const UsersTable = ({ users, page }) => {
                                     <ActionLink
                                         url={`/users/reset-password/${user.uid}`}
                                         icon={faArrowRotateForward}
-                                    />
-                                    <ActionLink
-                                        url={`/users/edit/${user.uid}`}
-                                        icon={faMarker}
                                     />
                                     <ActionLink
                                         url={`/users/delete/${user.uid}`}

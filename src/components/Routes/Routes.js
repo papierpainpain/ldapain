@@ -8,6 +8,7 @@ import UserAdd from '../../pages/Admin/UserAdd/UserAdd';
 import Logout from '../../pages/Auth/Logout/Logout';
 import ResetPassword from '../../pages/Auth/ResetPassword/ResetPassword';
 import ChangePassword from '../../pages/Auth/ChangePassword/ChangePassword';
+import UserDelete from '../../pages/Admin/UserDelete/UserDelete';
 
 const AppRoutes = () => {
     return (
@@ -60,6 +61,14 @@ const AppRoutes = () => {
                     element={
                         <AuthRequire requireRoles={['admin']}>
                             <UserAdd />
+                        </AuthRequire>
+                    }
+                />
+                <Route
+                    path="delete/:uid"
+                    element={
+                        <AuthRequire requireRoles={['admin']}>
+                            <UserDelete />
                         </AuthRequire>
                     }
                 />

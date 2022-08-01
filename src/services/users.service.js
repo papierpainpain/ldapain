@@ -35,8 +35,8 @@ const updateUser = async (token, user) => {
     return response.data;
 };
 
-const deleteUser = async (token, id) => {
-    const response = await axios.delete(BASE_URL + id, headers(token));
+const deleteUser = async (token, uid) => {
+    const response = await axios.delete(BASE_URL + uid, headers(token));
     return response.data;
 };
 
