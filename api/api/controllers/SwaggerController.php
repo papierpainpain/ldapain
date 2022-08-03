@@ -6,15 +6,10 @@ use \OpenApi\Annotations as OA;
 use \OpenApi\Generator as OG;
 
 /**
- * @OA\Info(title="LDAPain API REST", version="1.0.0")
+ * @OA\Info(title="LDAPain API REST", version="2.0.0-SNAPSHOT")
  * 
  * @OA\Server(
- *      url="http://localhost/api/v1",
- *      description="API REST pour le LDAPain"
- * )
- * 
- * @OA\Server(
- *      url="http://localhost:8088/api/v1",
+ *      url="http://localhost:3000/api",
  *      description="API REST pour le LDAPain"
  * )
  * 

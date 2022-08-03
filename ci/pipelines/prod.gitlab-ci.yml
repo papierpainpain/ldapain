@@ -1,0 +1,17 @@
+deploy-prod:
+    stage: deploy
+    variables:
+        PLAYBOOK_NAME: install_ldapain.yml
+        ENVIROMENT: inventory
+        VARIABLES: "ldapain_type=production ldapain_version=${VERSION}"
+    trigger:
+        project: nananas/ansible
+        branch: PAP-5-playbook-de-deploiement-avec-ansible
+        strategy: depend
+    needs:
+        - job: get-version
+          artifacts: true
+        - job: build-image
+    only:
+        - master
+        - tags

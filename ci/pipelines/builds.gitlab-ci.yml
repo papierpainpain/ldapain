@@ -1,0 +1,44 @@
+.build:
+    stage: build
+    except:
+        - merge_requests
+
+build-react:
+    extends: .build
+    image: node:17.9-alpine
+    tags:
+        - docker
+    script:
+        - npm ci
+        - npm run build
+    artifacts:
+        expire_in: 10 min
+        paths:
+            - build/
+    cache:
+        key: $CI_COMMIT_REF_SLUG
+        paths:
+            - .npm
+
+build-image:
+    extends: .build
+    tags:
+        - shell
+    before_script:
+        - docker login docker.io -u $DOCKER_USER -p $DOCKER_TOKEN
+    script:
+        - |
+          docker build \
+            -t $IMAGE:$VERSION \
+            -t $IMAGE:latest \
+            -f ci/Dockerfile.prod .
+        - docker push $IMAGE:$VERSION
+        - docker push $IMAGE:latest
+    after_script:
+        - docker logout
+        - docker images --filter "dangling=true" --format "{{.Repository}}:{{.Tag}}:{{.ID}}" | grep "$IMAGE" | cut -f 3 -d ":" | xargs docker rmi
+    needs:
+        - job: get-version
+          artifacts: true
+        - job: build-react
+          artifacts: true

@@ -1,57 +1,28 @@
 variables:
-  IMAGE: $DOCKER_USER/${CI_PROJECT_NAME}
-  TAG: ${CI_COMMIT_REF_SLUG}
+    IMAGE: $DOCKER_USER/${CI_PROJECT_NAME}
 
-build-react:
-  stage: build
-  tags:
-    - docker
-  image: node:17.9-alpine
-  script:
-    - npm ci
-    - npm run build
-  artifacts:
-    paths:
-      - build/
-    expire_in: 1h
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    paths:
-      - .npm
-  only:
-    - merge_requests
-    - master
+cache:
+  paths:
+    - node_modules
 
-build-image:
-  stage: build
-  tags:
-    - shell
-  script:
-    - docker build -t $IMAGE:$TAG -f ci/Dockerfile.prod .
-    - docker login docker.io -u $DOCKER_USER -p $DOCKER_TOKEN
-    - docker push $IMAGE:$TAG
-    - docker tag $IMAGE:$TAG $IMAGE:latest
-    - docker push $IMAGE:latest
-    - docker logout
-    - docker system prune -af
-  needs:
-    - job: build-react
-      artifacts: true
-  only:
-    - merge_requests
-    - master
+get-version:
+    stage: .pre
+    tags:
+        - shell
+    script:
+        - ci/scripts/version.sh
+    artifacts:
+        reports:
+            dotenv: build.env
 
-staging:
-  stage: deploy
-  variables:
-    PLAYBOOK_NAME: install_ldapain.yml
-    ENVIROMENT: inventory
-    VARIABLES: "container_version=2.0.0 container_image_tag=${CI_COMMIT_REF_SLUG}"
-  trigger:
-    project: nananas/ansible
-    branch: PAP-5
-    strategy: depend
-  needs:
-    job: build-react
-  only:
-    - master
+include:
+    - local: 'ci/pipelines/merge-requests.gitlab-ci.yml'
+    - local: 'ci/pipelines/builds.gitlab-ci.yml'
+    - local: 'ci/pipelines/dev.gitlab-ci.yml'
+    - local: 'ci/pipelines/prod.gitlab-ci.yml'
+
+workflow:
+    rules:
+        - if: $CI_PIPELINE_SOURCE == 'web' || $CI_PIPELINE_SOURCE == 'merge_request_event' || $CI_COMMIT_BRANCH == "develop"
+          when: always
+        - when: never

@@ -2,13 +2,26 @@ FROM alpine:latest
 
 WORKDIR /ldapain
 
-EXPOSE 3000
-EXPOSE 80
+
+RUN apk update && apk upgrade \
+    && apk add bash nginx \
+    && apk add php81 php81-fpm php81-opcache \
+    && apk add php81-gd php81-zlib php81-curl \
+    && apk add php81-mbstring php81-ldap php81-openssl \
+    && apk add php81-session php81-tokenizer \
+    && apk add nodejs npm
+
+RUN npm install -g npm@8.15.1
+
+COPY ci/nginx.conf /etc/nginx/http.d/default.conf
+COPY ci/www.conf /etc/php81/php-fpm.d/www.conf
+
+COPY package*.json ./
 
 
 ENV APP_ENV=prod
 ENV APP_NAME="LDAPain"
-ENV API_BASE="api/v1/"
+ENV API_BASE="api/"
 
 ENV LDAP_HOST=""
 ENV LDAP_PORT="389"
@@ -29,22 +42,9 @@ ENV JWT_ISSUER="LDAPain"
 ENV JWT_AUDIENCE=""
 
 
-RUN apk update && apk upgrade \
-    && apk add bash nginx \
-    && apk add php81 php81-fpm php81-opcache \
-    && apk add php81-gd php81-zlib php81-curl \
-    && apk add php81-mbstring php81-ldap php81-openssl \
-    && apk add php81-session php81-tokenizer \
-    && apk add nodejs npm
-
-RUN npm install -g npm@8.15.1
-
-COPY ci/nginx.conf /etc/nginx/http.d/default.conf
-COPY ci/www.conf /etc/php81/php-fpm.d/www.conf
-
-COPY package*.json ./
-
 RUN npm install
+
+EXPOSE 3000
 
 STOPSIGNAL SIGTERM
 

@@ -3,9 +3,16 @@ FROM papierpain/alpine-php81-nginx:latest
 LABEL Maintainer="PapierPain <papierpain4287@outlook.fr>"
 LABEL Description="LDAPain container to manage OpenLDAP"
 
+WORKDIR /ldapain
+
+COPY ci/nginx.conf /etc/nginx/http.d/default.conf
+COPY ci/www.conf /etc/php81/php-fpm.d/www.conf
+COPY api /ldapain/api
+COPY build /ldapain/web
+
 ENV APP_ENV=prod
 ENV APP_NAME="LDAPain"
-ENV API_BASE="api/v1/"
+ENV API_BASE="api/"
 
 ENV LDAP_HOST="ldap.example.com"
 ENV LDAP_PORT="389"
@@ -24,10 +31,3 @@ ENV JWT_SECRET="secret"
 ENV JWT_ALGORITHM="HS256"
 ENV JWT_ISSUER="LDAPain"
 ENV JWT_AUDIENCE="LDAPain"
-
-WORKDIR /ldapain
-
-COPY ci/nginx.conf /etc/nginx/http.d/default.conf
-COPY ci/www.conf /etc/php81/php-fpm.d/www.conf
-COPY api /ldapain/api
-COPY build /ldapain/web

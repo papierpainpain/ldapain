@@ -1,0 +1,28 @@
+.merge-request:
+    image: node:17.9-alpine
+    tags:
+        - docker
+    only:
+        - merge_requests
+
+# install-react:
+#     extends: .merge-request
+#     stage: build
+#     script:
+#         - npm install
+
+# lint-code:
+#     extends: .merge-request
+#     stage: test
+#     script:
+#         - npm run lint
+#     needs:
+#         - job: install-react
+
+# test-code:
+#     extends: .merge-request
+#     stage: test
+#     script:
+#         - npm run test
+#     needs:
+#         - job: install-react
