@@ -1,12 +1,12 @@
+import React, { useContext, useState } from 'react';
 import './UserAddForm.css';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
 import AuthContext from '../../../../components/Auth/AuthContext';
 import UsersService from '../../../../services/users.service';
 import Message from '../../../../components/Parts/Message/Message';
 
-const UserAddForm = () => {
+function UserAddForm() {
     const { token } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
@@ -35,9 +35,7 @@ const UserAddForm = () => {
             .catch((error) => {
                 setError('all', {
                     type: 'auth',
-                    message:
-                        error?.response?.data?.error ||
-                        'Cette erreur est inconnue donc RIP !',
+                    message: error?.response?.data?.error || 'Cette erreur est inconnue donc RIP !',
                 });
             });
     };
@@ -45,31 +43,17 @@ const UserAddForm = () => {
     return (
         <>
             {errors.all && (
-                <Message
-                    type="danger"
-                    message={errors.all.message}
-                    onClick={() => clearErrors()}
-                />
+                <Message type="danger" message={errors.all.message} onClick={() => clearErrors()} />
             )}
 
             {success && (
-                <Message
-                    type="success"
-                    message={success}
-                    onClick={() => setSuccess(null)}
-                />
+                <Message type="success" message={success} onClick={() => setSuccess(null)} />
             )}
 
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="userAddForm"
-            >
+            <form onSubmit={handleSubmit(onSubmit)} className="userAddForm">
                 <div className="row">
                     <div className="item">
-                        <label
-                            htmlFor="sn"
-                            className="itemTitle"
-                        >
+                        <label htmlFor="sn" className="itemTitle">
                             Prénom
                         </label>
                         <input
@@ -82,24 +66,19 @@ const UserAddForm = () => {
                                 required: 'Veuillez entrer le prénom',
                                 minLength: {
                                     value: 2,
-                                    message:
-                                        'Le prénom doit faire au moins 2 caractères',
+                                    message: 'Le prénom doit faire au moins 2 caractères',
                                 },
                                 type: 'text',
                             })}
                         />
                         {errors?.sn && (
                             <p className="error">
-                                {errors.sn.message ||
-                                    'Erreur inconnue, veuillez réessayer'}
+                                {errors.sn.message || 'Erreur inconnue, veuillez réessayer'}
                             </p>
                         )}
                     </div>
                     <div className="item">
-                        <label
-                            htmlFor="cn"
-                            className="itemTitle"
-                        >
+                        <label htmlFor="cn" className="itemTitle">
                             Nom
                         </label>
                         <input
@@ -112,16 +91,14 @@ const UserAddForm = () => {
                                 required: 'Veuillez entrer le nom',
                                 minLength: {
                                     value: 2,
-                                    message:
-                                        'Le nom doit faire au moins 2 caractères',
+                                    message: 'Le nom doit faire au moins 2 caractères',
                                 },
                                 type: 'text',
                             })}
                         />
                         {errors?.cn && (
                             <p className="error">
-                                {errors.cn.message ||
-                                    'Erreur inconnue, veuillez réessayer'}
+                                {errors.cn.message || 'Erreur inconnue, veuillez réessayer'}
                             </p>
                         )}
                     </div>
@@ -142,16 +119,14 @@ const UserAddForm = () => {
                                 required: "Veuillez entrer l'uid",
                                 minLength: {
                                     value: 2,
-                                    message:
-                                        "L'uid doit faire au moins 2 caractères",
+                                    message: "L'uid doit faire au moins 2 caractères",
                                 },
                                 type: 'text',
                             })}
                         />
                         {errors?.uid && (
                             <p className="error">
-                                {errors.uid.message ||
-                                    'Erreur inconnue, veuillez réessayer'}
+                                {errors.uid.message || 'Erreur inconnue, veuillez réessayer'}
                             </p>
                         )}
                     </div>
@@ -169,8 +144,7 @@ const UserAddForm = () => {
                                 required: "Veuillez entrer l'email",
                                 pattern: {
                                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                                    message:
-                                        "L'email n'est pas valide",
+                                    message: "L'email n'est pas valide",
                                 },
                                 type: 'email',
                             })}
@@ -188,6 +162,6 @@ const UserAddForm = () => {
             </form>
         </>
     );
-};
+}
 
 export default UserAddForm;

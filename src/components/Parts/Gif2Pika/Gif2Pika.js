@@ -1,18 +1,15 @@
+import React from 'react';
 import './Gif2Pika.css';
 import gifHome from './gif2Pika.gif';
 
-const Gif2Pika = () => {
+function Gif2Pika() {
     return (
-        <section className='secFigure'>
+        <section className="secFigure">
             <figure className="figureGif">
-                <img
-                    src={gifHome}
-                    alt="Gif D2Pika"
-                    className="image"
-                />
+                <img src={gifHome} alt="Gif D2Pika" className="image" />
             </figure>
         </section>
     );
-};
+}
 
 export default Gif2Pika;

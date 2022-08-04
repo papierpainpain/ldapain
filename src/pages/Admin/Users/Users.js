@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import UsersService from '../../../services/users.service';
 import AuthContext from '../../../components/Auth/AuthContext';
 import Layout from '../../../components/Parts/Layout/Layout';
 import UsersTable from './UsersTable/UsersTable';
 import UsersNav from './UsersNav/UsersNav';
 
-const Users = () => {
+function Users() {
     const { token } = useContext(AuthContext);
     const [users, setUsers] = useState([]);
     const [page, setPage] = useState(1);
@@ -13,12 +13,12 @@ const Users = () => {
 
     useEffect(() => {
         UsersService.getAllUsers(token)
-            .then((users) => {
-                setUsers(users);
+            .then((usersList) => {
+                setUsers(usersList);
                 setPage(1);
                 setTotalPages(Math.ceil(users.length / 8));
             })
-            .catch((error) => console.log(error));
+            .catch((error) => console.error(new Error(error)));
     }, [token]);
 
     return (
@@ -28,6 +28,6 @@ const Users = () => {
             <UsersTable users={users} page={page} />
         </Layout>
     );
-};
+}
 
 export default Users;

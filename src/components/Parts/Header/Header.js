@@ -1,18 +1,16 @@
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import HeaderLogo from './HeaderLogo/HeaderLogo';
 import HeaderNav from './HeaderNav/HeaderNav';
 import './Header.css';
-import { useContext } from 'react';
 import AuthContext from '../../Auth/AuthContext';
-import { Link } from 'react-router-dom';
 import gif from './pika.gif';
 
-const Header = () => {
+function Header() {
     const { isMobile } = useContext(AuthContext);
 
     return (
-        <header
-            className={isMobile ? 'headerMobile' : 'headerDesktop'}
-        >
+        <header className={isMobile ? 'headerMobile' : 'headerDesktop'}>
             <HeaderLogo />
 
             {!isMobile ? <HeaderNav /> : null}
@@ -28,6 +26,6 @@ const Header = () => {
             </Link>
         </header>
     );
-};
+}
 
 export default Header;

@@ -1,16 +1,14 @@
-import axios from "axios";
-import AuthService from "./auth.service";
+import axios from 'axios';
+import AuthService from './auth.service';
 
-const BASE_URL = "/api/users/";
+const BASE_URL = '/api/users/';
 
-const headers = (token) => {
-    return {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-        }
-    }
-}
+const headers = (token) => ({
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+    },
+});
 
 const getAllUsers = async (token) => {
     const response = await axios.get(BASE_URL, headers(token));

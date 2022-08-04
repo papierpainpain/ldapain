@@ -1,12 +1,13 @@
+import React from 'react';
 import LoginForm from './LoginForm/LoginForm';
 import LayoutNotAuth from '../../../components/Parts/LayoutNotAuth/LayoutNotAuth';
 
-const Login = () => {
+function Login() {
     return (
-        <LayoutNotAuth title='Connexion'>
+        <LayoutNotAuth title="Connexion">
             <LoginForm />
         </LayoutNotAuth>
     );
-};
+}
 
 export default Login;

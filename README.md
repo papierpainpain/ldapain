@@ -17,8 +17,8 @@ Clonez le projet puis suivez les instructions suivantes pour docker :
 * Puis dans le dossier du projet exécutez les commandes suivantes :
 
     ```bash
-    docker-compose build --no-cache
-    docker-compose up -d
+    docker-compose up --build -d # Build et démarre le serveur docker
+    docker-compose up -d # Démarre le serveur docker seulement
     ```
 
 * Ajoutez le fichier de configuration des variables de l'environnement (`.env.local`) :

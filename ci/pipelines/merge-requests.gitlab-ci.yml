@@ -2,22 +2,27 @@
     image: node:17.9-alpine
     tags:
         - docker
+    cache:
+        paths:
+            - node_modules
     only:
         - merge_requests
 
-# install-react:
-#     extends: .merge-request
-#     stage: build
-#     script:
-#         - npm install
+install-react:
+    extends: .merge-request
+    stage: build
+    script:
+        - npm install
 
-# lint-code:
-#     extends: .merge-request
-#     stage: test
-#     script:
-#         - npm run lint
-#     needs:
-#         - job: install-react
+lint-code:
+    extends: .merge-request
+    stage: test
+    before_script:
+        - npm install eslint
+    script:
+        - npm run lint
+    needs:
+        - job: install-react
 
 # test-code:
 #     extends: .merge-request

@@ -1,8 +1,8 @@
+import React, { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import AuthContext from './AuthContext';
-import { useContext } from 'react';
 
-const AuthRequire = ({ requireRoles = [], children }) => {
+function AuthRequire({ requireRoles = [], children }) {
     const { auth, role } = useContext(AuthContext);
     const location = useLocation();
 
@@ -13,21 +13,13 @@ const AuthRequire = ({ requireRoles = [], children }) => {
         return requireRoles.some((r) => role.includes(r));
     };
 
-    return (
-        <>
-            {auth && hasRoles() ? (
-                children
-            ) : auth ? (
-                <Navigate to="/" />
-            ) : (
-                <Navigate
-                    to="/login"
-                    replace
-                    state={{ from: location }}
-                />
-            )}
-        </>
-    );
-};
+    if (auth) {
+        if (hasRoles()) {
+            return children;
+        }
+        return <Navigate to="/" />;
+    }
+    return <Navigate to="/login" replace state={{ from: location }} />;
+}
 
 export default AuthRequire;

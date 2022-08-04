@@ -1,18 +1,16 @@
+import React, { useContext, useState } from 'react';
 import './Profile.css';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
-import AuthContext from '../../../components/Auth/AuthContext';
 import jwtDecode from 'jwt-decode';
+import AuthContext from '../../../components/Auth/AuthContext';
 import AuthService from '../../../services/auth.service';
 import ProfileHeader from '../../../components/Parts/ProfileHeader/ProfileHeader';
 import Message from '../../../components/Parts/Message/Message';
 
-const Profile = () => {
+function Profile() {
     const { token, setToken } = useContext(AuthContext);
-    const [user, setUser] = useState(
-        token ? jwtDecode(token).data : null
-    );
+    const [user, setUser] = useState(token ? jwtDecode(token).data : null);
     const {
         register,
         handleSubmit,
@@ -29,11 +27,7 @@ const Profile = () => {
     const [success, setSuccess] = useState(null);
 
     const onSubmit = (data) => {
-        AuthService.updateProfile(
-            token,
-            data.firstname,
-            data.lastname
-        )
+        AuthService.updateProfile(token, data.firstname, data.lastname)
             .then((userToken) => {
                 setToken(userToken.token);
                 setUser(jwtDecode(userToken.token).data);
@@ -42,9 +36,7 @@ const Profile = () => {
             .catch((error) => {
                 setError('all', {
                     type: 'auth',
-                    message:
-                        error?.response?.data?.error ||
-                        'Cette erreur est inconnue donc RIP !',
+                    message: error?.response?.data?.error || 'Cette erreur est inconnue donc RIP !',
                 });
             });
     };
@@ -52,33 +44,19 @@ const Profile = () => {
     return (
         <>
             {errors.all && (
-                <Message
-                    type="danger"
-                    message={errors.all.message}
-                    onClick={() => clearErrors()}
-                />
+                <Message type="danger" message={errors.all.message} onClick={() => clearErrors()} />
             )}
 
             {success && (
-                <Message
-                    type="success"
-                    message={success}
-                    onClick={() => setSuccess(null)}
-                />
+                <Message type="success" message={success} onClick={() => setSuccess(null)} />
             )}
 
             <ProfileHeader user={user} />
 
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="profileForm"
-            >
+            <form onSubmit={handleSubmit(onSubmit)} className="profileForm">
                 <div className="row">
                     <div className="item">
-                        <label
-                            htmlFor="firstname"
-                            className="itemTitle"
-                        >
+                        <label htmlFor="firstname" className="itemTitle">
                             Prénom
                         </label>
                         <input
@@ -88,28 +66,22 @@ const Profile = () => {
                             placeholder="Prénom"
                             className="itemContent"
                             {...register('firstname', {
-                                required:
-                                    'Veuillez entrer votre prénom',
+                                required: 'Veuillez entrer votre prénom',
                                 minLength: {
                                     value: 2,
-                                    message:
-                                        'Votre prénom doit faire au moins 2 caractères',
+                                    message: 'Votre prénom doit faire au moins 2 caractères',
                                 },
                                 type: 'text',
                             })}
                         />
                         {errors?.firstname && (
                             <p className="error">
-                                {errors.firstname.message ||
-                                    'Erreur inconnue, veuillez réessayer'}
+                                {errors.firstname.message || 'Erreur inconnue, veuillez réessayer'}
                             </p>
                         )}
                     </div>
                     <div className="item">
-                        <label
-                            htmlFor="lastname"
-                            className="itemTitle"
-                        >
+                        <label htmlFor="lastname" className="itemTitle">
                             Nom
                         </label>
                         <input
@@ -122,16 +94,14 @@ const Profile = () => {
                                 required: 'Veuillez entrer votre nom',
                                 minLength: {
                                     value: 2,
-                                    message:
-                                        'Votre nom doit faire au moins 2 caractères',
+                                    message: 'Votre nom doit faire au moins 2 caractères',
                                 },
                                 type: 'text',
                             })}
                         />
                         {errors?.lastname && (
                             <p className="error">
-                                {errors.lastname.message ||
-                                    'Erreur inconnue, veuillez réessayer'}
+                                {errors.lastname.message || 'Erreur inconnue, veuillez réessayer'}
                             </p>
                         )}
                     </div>
@@ -148,12 +118,10 @@ const Profile = () => {
                             id="email"
                             className="itemContent"
                             {...register('email', {
-                                required:
-                                    'Veuillez entrer votre email',
+                                required: 'Veuillez entrer votre email',
                                 pattern: {
                                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                                    message:
-                                        "Votre email n'est pas valide",
+                                    message: "Votre email n'est pas valide",
                                 },
                                 type: 'email',
                                 disabled: true,
@@ -162,10 +130,7 @@ const Profile = () => {
                     </div>
                     <div className="item">
                         <p className="itemTitle">Mot de passe</p>
-                        <Link
-                            to="/change-password"
-                            className="itemContent button"
-                        >
+                        <Link to="/change-password" className="itemContent button">
                             Changer le mot de passe ›
                         </Link>
                     </div>
@@ -181,6 +146,6 @@ const Profile = () => {
             </form>
         </>
     );
-};
+}
 
 export default Profile;

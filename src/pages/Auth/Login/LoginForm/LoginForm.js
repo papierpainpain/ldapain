@@ -1,15 +1,14 @@
-import AuthService from '../../../../services/auth.service';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import './LoginForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useContext } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AuthContext from '../../../../components/Auth/AuthContext';
 import Message from '../../../../components/Parts/Message/Message';
+import AuthService from '../../../../services/auth.service';
 
-const LoginForm = () => {
+function LoginForm() {
     const {
         register,
         handleSubmit,
@@ -31,9 +30,7 @@ const LoginForm = () => {
             .catch((error) => {
                 setError('all', {
                     type: 'auth',
-                    message:
-                        error?.response?.data?.error ||
-                        'Cette erreur est inconnue donc RIP !',
+                    message: error?.response?.data?.error || 'Cette erreur est inconnue donc RIP !',
                 });
             });
     };
@@ -41,18 +38,11 @@ const LoginForm = () => {
     return (
         <>
             {errors.all && (
-                <Message
-                    type="danger"
-                    message={errors.all.message}
-                    onClick={() => clearErrors()}
-                />
+                <Message type="danger" message={errors.all.message} onClick={() => clearErrors()} />
             )}
 
             <form onSubmit={handleSubmit(onSubmit)}>
-                <FontAwesomeIcon
-                    icon={faCircleUser}
-                    className="profileIcon"
-                />
+                <FontAwesomeIcon icon={faCircleUser} className="profileIcon" />
 
                 <div>
                     <label className="sr-only" htmlFor="uid">
@@ -67,16 +57,14 @@ const LoginForm = () => {
                             required: 'Veuillez entrer votre UID',
                             minLength: {
                                 value: 3,
-                                message:
-                                    'Votre UID doit faire au moins 3 caractères',
+                                message: 'Votre UID doit faire au moins 3 caractères',
                             },
                             type: 'text',
                         })}
                     />
                     {errors.uid && (
                         <p className="error">
-                            {errors.uid.message ||
-                                'Erreur inconnue, veuillez réessayer'}
+                            {errors.uid.message || 'Erreur inconnue, veuillez réessayer'}
                         </p>
                     )}
                 </div>
@@ -91,20 +79,17 @@ const LoginForm = () => {
                         id="password"
                         placeholder="Mot de passe"
                         {...register('password', {
-                            required:
-                                'Veuillez entrer votre mot de passe',
+                            required: 'Veuillez entrer votre mot de passe',
                             minLength: {
                                 value: 4,
-                                message:
-                                    'Votre mot de passe doit faire au moins 4 caractères',
+                                message: 'Votre mot de passe doit faire au moins 4 caractères',
                             },
                             type: 'password',
                         })}
                     />
                     {errors?.password && (
                         <p className="error">
-                            {errors.password.message ||
-                                'Erreur inconnue, veuillez réessayer'}
+                            {errors.password.message || 'Erreur inconnue, veuillez réessayer'}
                         </p>
                     )}
                 </div>
@@ -114,16 +99,12 @@ const LoginForm = () => {
                     <span>›</span>
                 </Link>
 
-                <button
-                    type="submit"
-                    className="button"
-                    onClick={() => clearErrors()}
-                >
+                <button type="submit" className="button" onClick={() => clearErrors()}>
                     Connexion
                 </button>
             </form>
         </>
     );
-};
+}
 
 export default LoginForm;

@@ -1,8 +1,8 @@
+import React from 'react';
 import './Layout.css';
 import Header from '../Header/Header';
 
-const Layout = ({ title, children }) => {
-
+function Layout({ title, children }) {
     return (
         <div className="mainContainer">
             <Header />
@@ -16,6 +16,6 @@ const Layout = ({ title, children }) => {
             </main>
         </div>
     );
-};
+}
 
 export default Layout;

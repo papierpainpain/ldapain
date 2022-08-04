@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# pattern="^:[a-z]*: [A-Z]*-[0-9]*"
+# if ! [[ $(cat $1) =~ $pattern ]]; 
+# then
+#     echo "\n"
+#     echo "\e[94;1m🚨 Wrong commit message! 😕"
+#     echo "| The commit message must have this format: \e[93;1m <gitmoji> <ticket-number> <summary> \e[0m"
+#     echo "\e[94;1m| Example: \e[93;1m :sparkles: PAP-71 Add a new feature \e[0m"
+#     echo "\n"
+#     exit 1
+# fi
+
+npm run lint:fix

@@ -1,12 +1,13 @@
+import React from 'react';
 import ResetPasswordForm from './ResetPasswordForm/ResetPasswordForm';
 import LayoutNotAuth from '../../../components/Parts/LayoutNotAuth/LayoutNotAuth';
 
-const ResetPassword = () => {
+function ResetPassword() {
     return (
-        <LayoutNotAuth title='GPerduMonMdp'>
+        <LayoutNotAuth title="GPerduMonMdp">
             <ResetPasswordForm />
         </LayoutNotAuth>
     );
-};
+}
 
 export default ResetPassword;

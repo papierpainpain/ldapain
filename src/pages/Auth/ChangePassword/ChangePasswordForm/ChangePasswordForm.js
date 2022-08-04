@@ -1,5 +1,5 @@
+import React, { useContext } from 'react';
 import jwtDecode from 'jwt-decode';
-import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuthContext from '../../../../components/Auth/AuthContext';
@@ -8,7 +8,7 @@ import AuthService from '../../../../services/auth.service';
 import ProfileHeader from '../../../../components/Parts/ProfileHeader/ProfileHeader';
 import './ChangePasswordForm.css';
 
-const ChangePasswordForm = () => {
+function ChangePasswordForm() {
     const { token, setToken } = useContext(AuthContext);
     const user = token ? jwtDecode(token).data : null;
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ const ChangePasswordForm = () => {
     const oldPassword = watch('oldPassword');
     const newPassword = watch('newPassword');
 
-    const pwdIsValid = (pwd, oldPassword) => {
+    const pwdIsValid = (pwd) => {
         if (pwd === oldPassword) {
             return "Le nouveau mot de passe ne peut pas être identique à l'ancien !";
         }
@@ -52,16 +52,10 @@ const ChangePasswordForm = () => {
         return true;
     };
 
-    const confPwdIsValid = (pwd, confPwd) => {
-        return pwd === confPwd;
-    };
+    const confPwdIsValid = (pwd, confPwd) => pwd === confPwd;
 
     const onSubmit = (data) => {
-        AuthService.updatePassword(
-            token,
-            data.oldPassword,
-            data.newPassword
-        )
+        AuthService.updatePassword(token, data.oldPassword, data.newPassword)
             .then((userToken) => {
                 setToken(userToken.token);
                 navigate(location.state?.from?.pathname || '/');
@@ -69,9 +63,7 @@ const ChangePasswordForm = () => {
             .catch((error) => {
                 setError('all', {
                     type: 'auth',
-                    message:
-                        error?.response?.data?.error ||
-                        'Cette erreur est inconnue donc RIP !',
+                    message: error?.response?.data?.error || 'Cette erreur est inconnue donc RIP !',
                 });
             });
     };
@@ -79,25 +71,15 @@ const ChangePasswordForm = () => {
     return (
         <>
             {errors.all && (
-                <Message
-                    type="danger"
-                    message={errors.all.message}
-                    onClick={() => clearErrors()}
-                />
+                <Message type="danger" message={errors.all.message} onClick={() => clearErrors()} />
             )}
 
             <ProfileHeader user={user} />
 
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="changePwdForm"
-            >
+            <form onSubmit={handleSubmit(onSubmit)} className="changePwdForm">
                 <div className="row">
                     <div className="item">
-                        <label
-                            htmlFor="oldPassword"
-                            className="itemTitle"
-                        >
+                        <label htmlFor="oldPassword" className="itemTitle">
                             Ancien mot de passe
                         </label>
                         <input
@@ -107,12 +89,10 @@ const ChangePasswordForm = () => {
                             placeholder="Ancien mot de passe"
                             className="itemContent"
                             {...register('oldPassword', {
-                                required:
-                                    'Veuillez entrer votre ancien mot de passe',
+                                required: 'Veuillez entrer votre ancien mot de passe',
                                 minLength: {
                                     value: 4,
-                                    message:
-                                        'Votre mot de passe doit faire au moins 4 caractères',
+                                    message: 'Votre mot de passe doit faire au moins 4 caractères',
                                 },
                                 type: 'password',
                             })}
@@ -125,10 +105,7 @@ const ChangePasswordForm = () => {
                         )}
                     </div>
                     <div className="item">
-                        <label
-                            htmlFor="newPassword"
-                            className="itemTitle"
-                        >
+                        <label htmlFor="newPassword" className="itemTitle">
                             Nouveau mot de passe
                         </label>
                         <input
@@ -138,10 +115,8 @@ const ChangePasswordForm = () => {
                             placeholder="Nouveau mot de passe"
                             className="itemContent"
                             {...register('newPassword', {
-                                required:
-                                    'Veuillez entrer votre nouveau mot de passe',
-                                validate: (value) =>
-                                    pwdIsValid(value, oldPassword),
+                                required: 'Veuillez entrer votre nouveau mot de passe',
+                                validate: (value) => pwdIsValid(value, oldPassword),
                                 type: 'password',
                             })}
                         />
@@ -156,10 +131,7 @@ const ChangePasswordForm = () => {
 
                 <div className="row">
                     <div className="item col-6">
-                        <label
-                            htmlFor="confPassword"
-                            className="itemTitle"
-                        >
+                        <label htmlFor="confPassword" className="itemTitle">
                             Confirmation mot de passe
                         </label>
                         <input
@@ -169,13 +141,9 @@ const ChangePasswordForm = () => {
                             placeholder="Confirmation mot de passe"
                             className="itemContent"
                             {...register('confPassword', {
-                                required:
-                                    'Veuillez confirmer le mot de passe',
+                                required: 'Veuillez confirmer le mot de passe',
                                 validate: (value) =>
-                                    confPwdIsValid(
-                                        value,
-                                        newPassword
-                                    ) ||
+                                    confPwdIsValid(value, newPassword) ||
                                     'Vos mots de passe ne correspondent pas',
                                 type: 'password',
                             })}
@@ -189,16 +157,12 @@ const ChangePasswordForm = () => {
                     </div>
                 </div>
 
-                <button
-                    type="submit"
-                    className="submit"
-                    onClick={() => clearErrors()}
-                >
+                <button type="submit" className="submit" onClick={() => clearErrors()}>
                     Enregistrer
                 </button>
             </form>
         </>
     );
-};
+}
 
 export default ChangePasswordForm;

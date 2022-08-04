@@ -1,15 +1,11 @@
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faHouse,
-    faUsers,
-    faPeopleRoof,
-    faKey,
-} from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faUsers, faPeopleRoof, faKey } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import './HeaderNav.css';
 import useRole from '../../../../hooks/useRole';
 
-const HeaderNav = () => {
+function HeaderNav() {
     const isAdmin = useRole('admin');
 
     return (
@@ -40,16 +36,13 @@ const HeaderNav = () => {
             {isAdmin && (
                 <li>
                     <Link to="/groups" className="navA">
-                        <FontAwesomeIcon
-                            icon={faPeopleRoof}
-                            fixedWidth
-                        />
+                        <FontAwesomeIcon icon={faPeopleRoof} fixedWidth />
                         <p>Groupes</p>
                     </Link>
                 </li>
             )}
         </ul>
     );
-};
+}
 
 export default HeaderNav;

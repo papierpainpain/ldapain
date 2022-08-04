@@ -12,10 +12,7 @@ const useAuth = () => {
 
     const getToken = () => {
         const tokenFS = getTokenFromStorage();
-        if (
-            tokenFS &&
-            !(jwtDecode(tokenFS).exp <= Date.now() / 1000)
-        ) {
+        if (tokenFS && !(jwtDecode(tokenFS).exp <= Date.now() / 1000)) {
             return tokenFS;
         }
         localStorage.removeItem('token');
@@ -23,15 +20,15 @@ const useAuth = () => {
     };
 
     const [token, setToken] = useState(getToken());
-    const [auth, setAuth] = useState(token ? true : false);
+    const [auth, setAuth] = useState(!!token);
     const [role, setRole] = useState(token ? jwtDecode(token).data.groups : null);
 
-    const saveToken = (token) => {
-        if (token) {
-            localStorage.setItem('token', token);
-            setToken(token);
+    const saveToken = (newToken) => {
+        if (newToken) {
+            localStorage.setItem('token', newToken);
+            setToken(newToken);
             setAuth(true);
-            setRole(jwtDecode(token).data.groups);
+            setRole(jwtDecode(newToken).data.groups);
         } else {
             localStorage.removeItem('token');
             setToken(null);

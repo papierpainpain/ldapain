@@ -1,6 +1,7 @@
+import React from 'react';
 import './TableHeader.css';
 
-const TableHeader = () => {
+function TableHeader() {
     return (
         <thead>
             <tr>
@@ -19,6 +20,6 @@ const TableHeader = () => {
             </tr>
         </thead>
     );
-};
+}
 
 export default TableHeader;

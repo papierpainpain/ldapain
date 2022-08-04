@@ -1,13 +1,10 @@
-import {
-    faArrowLeft,
-    faArrowRight,
-    faPlusCircle,
-} from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import { faArrowLeft, faArrowRight, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import './UsersNav.css';
 
-const UsersNav = ({ totalPages, page, setPage }) => {
+function UsersNav({ totalPages, page, setPage }) {
     const previousPage = () => {
         if (page > 1) {
             setPage(page - 1);
@@ -23,11 +20,7 @@ const UsersNav = ({ totalPages, page, setPage }) => {
     return (
         <div className="usersNav">
             <Link to="/users/add" className="userAddLink">
-                <FontAwesomeIcon
-                    icon={faPlusCircle}
-                    fixedWidth
-                    className="addIcon"
-                />
+                <FontAwesomeIcon icon={faPlusCircle} fixedWidth className="addIcon" />
                 <p>Nouvel utilisateur</p>
             </Link>
 
@@ -50,6 +43,6 @@ const UsersNav = ({ totalPages, page, setPage }) => {
             </div>
         </div>
     );
-};
+}
 
 export default UsersNav;

@@ -1,8 +1,9 @@
+import React from 'react';
 import Gif2Pika from '../Gif2Pika/Gif2Pika';
 import LogoHeader from './LogoHeader/LogoHeader';
 import './LayoutNotAuth.css';
 
-const LayoutNotAuth = ({ title, children }) => {
+function LayoutNotAuth({ title, children }) {
     return (
         <div className="notAuthContainer">
             <LogoHeader />
@@ -22,6 +23,6 @@ const LayoutNotAuth = ({ title, children }) => {
             </main>
         </div>
     );
-};
+}
 
 export default LayoutNotAuth;

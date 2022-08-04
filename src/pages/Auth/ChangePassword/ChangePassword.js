@@ -1,9 +1,10 @@
-import Layout from "../../../components/Parts/Layout/Layout";
-import ChangePasswordForm from "./ChangePasswordForm/ChangePasswordForm";
+import React from 'react';
+import Layout from '../../../components/Parts/Layout/Layout';
+import ChangePasswordForm from './ChangePasswordForm/ChangePasswordForm';
 
-const ChangePassword = () => {
+function ChangePassword() {
     return (
-        <Layout title='Changement de mot de passe'>
+        <Layout title="Changement de mot de passe">
             <ChangePasswordForm />
         </Layout>
     );

@@ -1,11 +1,7 @@
-import {
-    Checkbox,
-    TableCell,
-    TableHead,
-    TableRow,
-} from '@mui/material';
+import React from 'react';
+import { Checkbox, TableCell, TableHead, TableRow } from '@mui/material';
 
-const TableHeader = () => {
+function TableHeader() {
     return (
         <TableHead>
             <TableRow>
@@ -24,6 +20,6 @@ const TableHeader = () => {
             </TableRow>
         </TableHead>
     );
-};
+}
 
 export default TableHeader;

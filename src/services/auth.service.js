@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-const BASE_URL = "/api/";
+const BASE_URL = '/api/';
 
 const login = async (uid, password) => {
     const response = await axios({
         method: 'post',
-        url: BASE_URL + 'token',
+        url: `${BASE_URL}token`,
         data: {
-            uid: uid,
-            password: password,
+            uid,
+            password,
         },
         headers: { 'Content-Type': 'application/json' },
     });
@@ -19,7 +19,7 @@ const login = async (uid, password) => {
 const updateProfile = async (token, firstname, lastname) => {
     const response = await axios({
         method: 'put',
-        url: BASE_URL + 'profile',
+        url: `${BASE_URL}profile`,
         data: {
             cn: lastname,
             sn: firstname,
@@ -40,9 +40,9 @@ const logout = () => {
 const resetPassword = async (uid) => {
     const response = await axios({
         method: 'put',
-        url: BASE_URL + 'profile/password/reset',
+        url: `${BASE_URL}profile/password/reset`,
         data: {
-            uid: uid,
+            uid,
         },
         headers: { 'Content-Type': 'application/json' },
     });
@@ -53,10 +53,10 @@ const resetPassword = async (uid) => {
 const updatePassword = async (token, oldPassword, newPassword) => {
     const response = await axios({
         method: 'put',
-        url: BASE_URL + 'profile/password',
+        url: `${BASE_URL}profile/password`,
         data: {
-            oldPassword: oldPassword,
-            newPassword: newPassword,
+            oldPassword,
+            newPassword,
         },
         headers: {
             'Content-Type': 'application/json',

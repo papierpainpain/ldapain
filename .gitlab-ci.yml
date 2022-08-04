@@ -1,10 +1,6 @@
 variables:
     IMAGE: $DOCKER_USER/${CI_PROJECT_NAME}
 
-cache:
-  paths:
-    - node_modules
-
 get-version:
     stage: .pre
     tags:
