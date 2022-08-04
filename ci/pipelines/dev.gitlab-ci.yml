@@ -6,7 +6,7 @@ deploy-dev:
         VARIABLES: "ldapain_type=development ldapain_version=${VERSION}"
     trigger:
         project: nananas/ansible
-        branch: PAP-5-playbook-de-deploiement-avec-ansible
+        branch: master
         strategy: depend
     needs:
         - job: get-version
