@@ -1,10 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { faArrowRotateForward, faTrash } from '@fortawesome/free-solid-svg-icons';
 import ActionLink from './ActionLink/ActionLink';
 import TableHeader from './TableHeader/TableHeader';
 import './UsersTable.css';
 
 function UsersTable({ users, page }) {
+    UsersTable.propTypes = {
+        users: PropTypes.arrayOf(
+            PropTypes.shape({
+                uid: PropTypes.string.isRequired,
+                sn: PropTypes.string.isRequired,
+                mail: PropTypes.string.isRequired,
+            }),
+        ).isRequired,
+        page: PropTypes.number.isRequired,
+    };
+
     return (
         <div className="userTableContainer">
             <table className="table">

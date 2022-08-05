@@ -1,8 +1,14 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { Navigate, useLocation } from 'react-router-dom';
 import AuthContext from './AuthContext';
 
 function AuthRequire({ requireRoles = [], children }) {
+    AuthRequire.propTypes = {
+        requireRoles: PropTypes.arrayOf(PropTypes.string).isRequired,
+        children: PropTypes.node.isRequired,
+    };
+
     const { auth, role } = useContext(AuthContext);
     const location = useLocation();
 

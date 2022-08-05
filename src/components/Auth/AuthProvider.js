@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import AuthContext from './AuthContext';
 import useAuth from '../../hooks/useAuth';
 
 function AuthProvider({ children }) {
+    AuthProvider.propTypes = {
+        children: PropTypes.node.isRequired,
+    };
+
     const { token, setToken, auth, role } = useAuth();
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1200);
 
