@@ -38,12 +38,18 @@ const deleteUser = async (token, uid) => {
     return response.data;
 };
 
+const resetPwdUser = async (token, uid) => {
+    const response = await axios.put(`${BASE_URL}/reset-pwd/${uid}`, null, headers(token));
+    return response.data;
+};
+
 const UsersService = {
     getAllUsers,
     getUserById,
     createUser,
     updateUser,
     deleteUser,
+    resetPwdUser,
 };
 
 export default UsersService;

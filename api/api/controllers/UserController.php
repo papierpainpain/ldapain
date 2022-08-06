@@ -219,6 +219,49 @@ class UserController
         }
     }
 
+    /**
+     * @OA\Put(
+     *      path="/users/reset-pwd/{uid}", tags={"users"},
+     *      summary="Reset a user password",
+     *      description="Reset a user password",
+     *      operationId="resetUserPwd",
+     *      security={{"bearerAuth":{}}},
+     *      
+     *      @OA\Parameter(
+     *          name="uid", in="path", required=true,
+     *          description="Uid of the user to retrieve",
+     *          @OA\Schema(type="string")
+     *      ),
+     *      
+     *      @OA\Response(response=200, description="User password reset"),
+     *      @OA\Response(response=400, description="Missing/Incorrect parameters"),
+     *      @OA\Response(response=403, description="Access denied"),
+     *      @OA\Response(response=404, description="User not found"),
+     *      @OA\Response(response=500, description="Failed to update user")
+     * )
+     */
+    public static function resetUserPwd($uid)
+    {
+        $userObj = new User($_ENV['LDAP_ADMIN_USER'], $_ENV['LDAP_ADMIN_PASS']);
+        $user = $userObj->getUserById($uid);
+        if ($user) {
+            try {
+                $password = Password::generate();
+                $status = $userObj->resetPassword($user['dn'], $password);
+                if ($status) {
+                    Mail::sendPasswordReset($user['mail'], $user['uid'], $password);
+                    Api::success(200, ['success' => 'Mot de passe réinitialisé']);
+                } else {
+                    Api::error(500, 'Erreur lors de la réinitialisation du mot de passe');
+                }
+            } catch (\Exception $e) {
+                Api::error(401, $e->getMessage());
+            }
+        } else {
+            Api::error(404, 'L\'utilisateur n\'a pas été trouvé');
+        }
+    }
+
     private static function checkPassword($password)
     {
         if (strlen($password) < 8) {

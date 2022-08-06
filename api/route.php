@@ -28,9 +28,11 @@ $router->post('users/', $userController . '::createUser', $admin);
 $router->get('users/:id', $userController . '::getUserById', $admin);
 $router->put('users/:id', $userController . '::updateUser', $admin);
 $router->delete('users/:id', $userController . '::deleteUser', $admin);
+$router->put('users/reset-pwd/:id', $userController . '::resetUserPwd', $admin);
 
 $router->options('users/', $optionsController . '::allow');
 $router->options('users/:id', $optionsController . '::allow');
+$router->options('users/reset-pwd/:id', $optionsController . '::allow');
 
 // *** GROUP APIS *** //
 

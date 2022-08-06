@@ -10,6 +10,7 @@ import Logout from '../../pages/Auth/Logout/Logout';
 import ResetPassword from '../../pages/Auth/ResetPassword/ResetPassword';
 import ChangePassword from '../../pages/Auth/ChangePassword/ChangePassword';
 import UserDelete from '../../pages/Admin/UserDelete/UserDelete';
+import UserResetPwd from '../../pages/Admin/UserResetPwd/UserResetPwd';
 
 function AppRoutes() {
     return (
@@ -67,6 +68,14 @@ function AppRoutes() {
                     element={
                         <AuthRequire requireRoles={['admin']}>
                             <UserDelete />
+                        </AuthRequire>
+                    }
+                />
+                <Route
+                    path="reset-password/:uid"
+                    element={
+                        <AuthRequire requireRoles={['admin']}>
+                            <UserResetPwd />
                         </AuthRequire>
                     }
                 />
