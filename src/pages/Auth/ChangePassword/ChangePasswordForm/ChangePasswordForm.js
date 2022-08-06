@@ -3,13 +3,12 @@ import jwtDecode from 'jwt-decode';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuthContext from '../../../../components/Auth/AuthContext';
-import Message from '../../../../components/Parts/Message/Message';
 import AuthService from '../../../../services/auth.service';
 import ProfileHeader from '../../../../components/Parts/ProfileHeader/ProfileHeader';
 import './ChangePasswordForm.css';
 
 function ChangePasswordForm() {
-    const { token, setToken } = useContext(AuthContext);
+    const { token, setToken, setMessage } = useContext(AuthContext);
     const user = token ? jwtDecode(token).data : null;
     const navigate = useNavigate();
     const location = useLocation();
@@ -17,7 +16,6 @@ function ChangePasswordForm() {
         register,
         handleSubmit,
         formState: { errors },
-        setError,
         clearErrors,
         watch,
     } = useForm({
@@ -58,11 +56,15 @@ function ChangePasswordForm() {
         AuthService.updatePassword(token, data.oldPassword, data.newPassword)
             .then((userToken) => {
                 setToken(userToken.token);
+                setMessage({
+                    type: 'success',
+                    message: 'Mot de passe mis à jour avec succès',
+                });
                 navigate(location.state?.from?.pathname || '/');
             })
             .catch((error) => {
-                setError('all', {
-                    type: 'auth',
+                setMessage({
+                    type: 'danger',
                     message: error?.response?.data?.error || 'Cette erreur est inconnue donc RIP !',
                 });
             });
@@ -70,10 +72,6 @@ function ChangePasswordForm() {
 
     return (
         <>
-            {errors.all && (
-                <Message type="danger" message={errors.all.message} onClick={() => clearErrors()} />
-            )}
-
             <ProfileHeader user={user} />
 
             <form onSubmit={handleSubmit(onSubmit)} className="changePwdForm">

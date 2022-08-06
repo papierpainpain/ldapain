@@ -6,16 +6,14 @@ import jwtDecode from 'jwt-decode';
 import AuthContext from '../../../components/Auth/AuthContext';
 import AuthService from '../../../services/auth.service';
 import ProfileHeader from '../../../components/Parts/ProfileHeader/ProfileHeader';
-import Message from '../../../components/Parts/Message/Message';
 
 function Profile() {
-    const { token, setToken } = useContext(AuthContext);
+    const { token, setToken, setMessage } = useContext(AuthContext);
     const [user, setUser] = useState(token ? jwtDecode(token).data : null);
     const {
         register,
         handleSubmit,
         formState: { errors },
-        setError,
         clearErrors,
     } = useForm({
         defaultValues: {
@@ -24,18 +22,20 @@ function Profile() {
             email: user?.mail || '',
         },
     });
-    const [success, setSuccess] = useState(null);
 
     const onSubmit = (data) => {
         AuthService.updateProfile(token, data.firstname, data.lastname)
             .then((userToken) => {
                 setToken(userToken.token);
                 setUser(jwtDecode(userToken.token).data);
-                setSuccess('Profil mis à jour !');
+                setMessage({
+                    type: 'success',
+                    message: 'Profil mis à jour !',
+                });
             })
             .catch((error) => {
-                setError('all', {
-                    type: 'auth',
+                setMessage({
+                    type: 'error',
                     message: error?.response?.data?.error || 'Cette erreur est inconnue donc RIP !',
                 });
             });
@@ -43,14 +43,6 @@ function Profile() {
 
     return (
         <>
-            {errors.all && (
-                <Message type="danger" message={errors.all.message} onClick={() => clearErrors()} />
-            )}
-
-            {success && (
-                <Message type="success" message={success} onClick={() => setSuccess(null)} />
-            )}
-
             <ProfileHeader user={user} />
 
             <form onSubmit={handleSubmit(onSubmit)} className="profileForm">
@@ -136,11 +128,7 @@ function Profile() {
                     </div>
                 </div>
 
-                <button
-                    type="submit"
-                    className="submit"
-                    onClick={() => clearErrors() && setSuccess(null)}
-                >
+                <button type="submit" className="submit" onClick={() => clearErrors()}>
                     Enregistrer
                 </button>
             </form>

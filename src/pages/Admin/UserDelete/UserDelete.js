@@ -1,29 +1,34 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AuthContext from '../../../components/Auth/AuthContext';
 import Layout from '../../../components/Parts/Layout/Layout';
 import UsersService from '../../../services/users.service';
 import './UserDelete.css';
-import Message from '../../../components/Parts/Message/Message';
 
 function UserDelete() {
-    const { token } = useContext(AuthContext);
+    const { token, setMessage } = useContext(AuthContext);
     const navigate = useNavigate();
     const { uid } = useParams();
-    const [error, setError] = useState(null);
 
     const deleteUser = () => {
         UsersService.deleteUser(token, uid)
             .then(() => {
+                setMessage({
+                    type: 'success',
+                    message: 'Utilisateur supprimé avec succès',
+                });
                 navigate('/users');
             })
-            .catch((e) => setError(e.response.data));
+            .catch((e) =>
+                setMessage({
+                    type: 'danger',
+                    message: e.response.data,
+                }),
+            );
     };
 
     return (
         <Layout title="Suppression de l'utilisateur">
-            {error && <Message type="danger" message={error} onClick={() => setError(null)} />}
-
             <p>
                 Êtes-vous sûr de vouloir supprimer l'utilisateur <b>{uid}</b> ?
             </p>

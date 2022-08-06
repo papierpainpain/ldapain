@@ -9,6 +9,7 @@ function AuthProvider({ children }) {
     };
 
     const { token, setToken, auth, role } = useAuth();
+    const [message, setMessage] = useState(null);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1200);
 
     useEffect(() => {
@@ -29,6 +30,8 @@ function AuthProvider({ children }) {
                 setToken,
                 auth,
                 role,
+                message,
+                setMessage,
                 isMobile,
             }}
         >

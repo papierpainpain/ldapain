@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import './Layout.css';
 import Header from '../Header/Header';
+import AuthContext from '../../Auth/AuthContext';
+import Message from '../Message/Message';
 
 function Layout({ title, children }) {
     Layout.propTypes = {
@@ -9,8 +11,14 @@ function Layout({ title, children }) {
         children: PropTypes.node.isRequired,
     };
 
+    const { message, setMessage } = useContext(AuthContext);
+
     return (
         <div className="mainContainer">
+            {message?.message && (
+                <Message type={message.type} message={message.message} setMessage={setMessage} />
+            )}
+
             <Header />
 
             <main>
