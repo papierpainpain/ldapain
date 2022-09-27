@@ -1,4 +1,4 @@
-FROM papierpain/alpine-php81-nginx:latest
+FROM registry.gitlab.papierpain.fr/docker/alpine-php81-nginx:1.0.0
 
 LABEL Maintainer="PapierPain <papierpain4287@outlook.fr>"
 LABEL Description="LDAPain container to manage OpenLDAP"

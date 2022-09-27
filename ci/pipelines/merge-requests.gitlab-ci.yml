@@ -1,7 +1,5 @@
 .merge-request:
-    image: node:17.9-alpine
-    tags:
-        - docker
+    image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/arm32v7/node:17.9-alpine
     cache:
         paths:
             - node_modules
