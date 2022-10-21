@@ -5,7 +5,7 @@
 
 build-react:
     extends: .build
-    image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/arm32v7/node:17.9-alpine
+    image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/arm64v8/node:17.9-alpine
     script:
         - npm ci
         - npm run build
@@ -25,16 +25,10 @@ build-image:
     before_script:
         - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     script:
-        - |
-          docker build \
-            -t $CI_REGISTRY_IMAGE:$VERSION \
-            -t $CI_REGISTRY_IMAGE:latest \
-            -f ci/Dockerfile.prod .
-        - docker push $CI_REGISTRY_IMAGE:$VERSION
-        - docker push $CI_REGISTRY_IMAGE:latest
+        - docker buildx b -t $CI_REGISTRY_IMAGE:$VERSION -t $CI_REGISTRY_IMAGE:latest --platform linux/arm64 -f ci/Dockerfile.prod --push .
+        # - docker rmi $CI_REGISTRY_IMAGE:$VERSION $CI_REGISTRY_IMAGE:latest
     after_script:
         - docker logout
-        - docker rmi $CI_REGISTRY_IMAGE:$VERSION $CI_REGISTRY_IMAGE:latest
     needs:
         - job: get-version
           artifacts: true

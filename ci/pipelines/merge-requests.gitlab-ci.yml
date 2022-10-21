@@ -1,5 +1,5 @@
 .merge-request:
-    image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/arm32v7/node:17.9-alpine
+    image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/arm64v8/node:17.9-alpine
     cache:
         paths:
             - node_modules
@@ -21,11 +21,3 @@ lint-code:
         - npm run lint
     needs:
         - job: install-react
-
-# test-code:
-#     extends: .merge-request
-#     stage: test
-#     script:
-#         - npm run test
-#     needs:
-#         - job: install-react

@@ -1,9 +1,9 @@
 get-version:
     stage: .pre
-    tags:
-        - shell
     script:
-        - ci/scripts/version.sh
+        - |
+          export VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+          echo "VERSION=${VERSION}" > build.env
     artifacts:
         reports:
             dotenv: build.env
