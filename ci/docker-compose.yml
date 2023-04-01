@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  app:
+    image: registry.papierpain.fr/labo/ldapain:${VERSION}
+    environment: # Ces variables sont définies dans le CICD ou dans les variables d'environnement Gitlab
+      - LDAP_HOST=${LDAP_HOST}
+      - LDAP_USERS_BASE=${LDAP_USERS_BASE}
+      - LDAP_GROUPS_BASE=${LDAP_GROUPS_BASE}
+      - LDAP_ADMIN_USER=${LDAP_ADMIN_USER}
+      - LDAP_ADMIN_PASS=${LDAP_ADMIN_PASS}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_AUDIENCE=${JWT_AUDIENCE}
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        max_attempts: 3
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=cloud-public
+        - traefik.constraint-label=cloud-public
+        
+        ## HTTP ##
+        - traefik.http.routers.ldapain.entrypoints=web
+        - traefik.http.routers.ldapain.rule=Host(`${DOMAIN?Variable not set}`)
+        - traefik.http.routers.ldapain.middlewares=ldapain-redirect
+        # middlewares
+        - traefik.http.middlewares.ldapain-redirect.redirectscheme.scheme=https
+        - traefik.http.middlewares.ldapain-redirect.redirectscheme.permanent=true
+        
+        ## HTTPS ##
+        - traefik.http.routers.ldapain-https.entrypoints=websecure
+        - traefik.http.routers.ldapain-https.rule=Host(`${DOMAIN?Variable not set}`)
+        - traefik.http.routers.ldapain-https.tls=true
+        - traefik.http.routers.ldapain-https.tls.certresolver=letsencrypt
+        - traefik.http.routers.ldapain-https.tls.options=default
+        
+        ## LOADBALANCER ##
+        - traefik.http.services.ldapain-https.loadbalancer.server.port=80
+    networks:
+      - cloud-public
+
+networks:
+  cloud-public:
+    driver: overlay
+    external: true
+    name: cloud-public

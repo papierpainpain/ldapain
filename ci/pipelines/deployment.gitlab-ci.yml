@@ -1,0 +1,69 @@
+#####################################
+# TEMPLATES
+#####################################
+
+#
+
+#####################################
+# JOBS
+#####################################
+
+prepare:
+  stage: .pre
+  script:
+    - |
+      VERSION=$(cat package.json | grep -m 1 '"version"' | cut -d '"' -f 4)
+      echo "VERSION=${VERSION}" > .env
+    - |
+      ENVIRONMENT=$(if [[ $CI_COMMIT_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || [[ $CI_COMMIT_BRANCH == "master" ]]; then echo "production"; else echo "development"; fi)
+      echo "ENVIRONMENT=${ENVIRONMENT}" >> .env
+    - ENVIRONMENT_URL=$(if [[ $ENVIRONMENT == "production" ]]; then echo "ldapain.papierpain.fr"; else echo "dev.ldapain.papierpain.fr"; fi)
+  artifacts:
+    reports:
+      dotenv: .env
+  except:
+    - merge_requests
+
+frontend:
+  stage: build
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:17.9-alpine
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    expire_in: 10 min
+    paths:
+      - build/
+  except:
+    - merge_requests
+
+docker:
+  extends: .template-build-docker
+  variables:
+    VERSION: "${VERSION}"
+    DOCKERFILE: "ci/Dockerfile.prod"
+    BUILD_PATH: "."
+  needs:
+    - job: prepare
+      artifacts: true
+    - job: frontend
+      artifacts: true
+  except:
+    - merge_requests
+
+deploy-stack:
+  extends: .template-deploy-stack
+  variables:
+    DOMAIN: ldapain.papierpain.fr
+    VERSION: "${VERSION}"
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  environment:
+    name: production
+    url: https://ldapain.papierpain.fr
+  needs:
+    - job: prepare
+      artifacts: true
+    - job: docker
+  except:
+    - merge_requests

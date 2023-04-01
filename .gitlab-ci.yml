@@ -1,21 +1,26 @@
-get-version:
-    stage: .pre
-    script:
-        - |
-          export VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
-          echo "VERSION=${VERSION}" > build.env
-    artifacts:
-        reports:
-            dotenv: build.env
+variables:
+  PIPELINE_NAME: Deploy LDAPain
+
+############################
+## JOBS
+############################
 
 include:
-    - local: 'ci/pipelines/merge-requests.gitlab-ci.yml'
-    - local: 'ci/pipelines/builds.gitlab-ci.yml'
-    - local: 'ci/pipelines/dev.gitlab-ci.yml'
-    - local: 'ci/pipelines/prod.gitlab-ci.yml'
+  - project: 'labo/cicd-templates'
+    ref: master
+    file:
+      - '/templates/build-docker.gitlab-ci.yml'
+      - '/templates/deploy-swarm.gitlab-ci.yml'
+  - local: ci/pipelines/merge-requests.gitlab-ci.yml
+  - local: ci/pipelines/deployment.gitlab-ci.yml
+
+############################
+## WORKFLOW
+############################
 
 workflow:
-    rules:
-        - if: $CI_PIPELINE_SOURCE == 'web' || $CI_PIPELINE_SOURCE == 'merge_request_event' || $CI_COMMIT_BRANCH == "develop"
-          when: always
-        - when: never
+  name: $PIPELINE_NAME
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: never

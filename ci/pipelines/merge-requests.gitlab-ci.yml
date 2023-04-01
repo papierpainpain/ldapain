@@ -1,23 +1,31 @@
+#####################################
+# TEMPLATES
+#####################################
+
 .merge-request:
-    image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/arm64v8/node:17.9-alpine
-    cache:
-        paths:
-            - node_modules
-    only:
-        - merge_requests
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:17.9-alpine
+  cache:
+    paths:
+      - node_modules
+  only:
+    - merge_requests
+
+#####################################
+# JOBS
+#####################################
 
 install-react:
-    extends: .merge-request
-    stage: build
-    script:
-        - npm install
+  extends: .merge-request
+  stage: build
+  script:
+    - npm install
 
 lint-code:
-    extends: .merge-request
-    stage: test
-    before_script:
-        - npm install eslint
-    script:
-        - npm run lint
-    needs:
-        - job: install-react
+  extends: .merge-request
+  stage: test
+  before_script:
+    - npm install eslint
+  script:
+    - npm run lint
+  needs:
+    - job: install-react
