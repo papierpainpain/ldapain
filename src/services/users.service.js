@@ -39,7 +39,7 @@ const deleteUser = async (token, uid) => {
 };
 
 const resetPwdUser = async (token, uid) => {
-    const response = await axios.put(`${BASE_URL}/reset-pwd/${uid}`, null, headers(token));
+    const response = await axios.put(`${BASE_URL}reset-pwd/${uid}`, null, headers(token));
     return response.data;
 };
 

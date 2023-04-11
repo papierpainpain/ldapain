@@ -19,7 +19,7 @@ function Users() {
                 setTotalPages(Math.ceil(usersList.length / 8));
             })
             .catch((e) => setMessage({ type: 'danger', message: e.response.data }));
-    }, [token]);
+    }, [token, setMessage]);
 
     return (
         <Layout title="Utilisateurs">

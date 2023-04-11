@@ -22,7 +22,7 @@ function UserResetPwd() {
             .catch((e) =>
                 setMessage({
                     type: 'danger',
-                    message: e.response.data,
+                    message: e, // .response.data,
                 }),
             );
     };
