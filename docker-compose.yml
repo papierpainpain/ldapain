@@ -13,6 +13,6 @@ services:
     stdin_open: true
     volumes:
       - ./api:/ldapain/api
-      - ./src:/ldapain/src
-      - ./public:/ldapain/public
-      - ./node_modules:/ldapain/node_modules
+      - ./web/src:/ldapain/src
+      - ./web/public:/ldapain/public
+      - ./web/node_modules:/ldapain/node_modules

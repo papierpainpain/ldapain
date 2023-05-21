@@ -1,23 +1,12 @@
 #####################################
-# TEMPLATES
-#####################################
-
-#
-
-#####################################
 # JOBS
 #####################################
 
 prepare:
   stage: .pre
+  image: registry.papierpain.fr/docker/alpine:latest
   script:
-    - |
-      VERSION=$(cat package.json | grep -m 1 '"version"' | cut -d '"' -f 4)
-      echo "VERSION=${VERSION}" > .env
-    - |
-      ENVIRONMENT=$(if [[ $CI_COMMIT_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || [[ $CI_COMMIT_BRANCH == "master" ]]; then echo "production"; else echo "development"; fi)
-      echo "ENVIRONMENT=${ENVIRONMENT}" >> .env
-    - ENVIRONMENT_URL=$(if [[ $ENVIRONMENT == "production" ]]; then echo "ldapain.papierpain.fr"; else echo "dev.ldapain.papierpain.fr"; fi)
+    - echo "VERSION=$(jq -r '.version' web/package.json)" > .env
   artifacts:
     reports:
       dotenv: .env
@@ -26,14 +15,15 @@ prepare:
 
 frontend:
   stage: build
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:17.9-alpine
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:18.15-alpine
   script:
+    - cd web
     - npm ci
     - npm run build
   artifacts:
     expire_in: 10 min
     paths:
-      - build/
+      - web/build/
   except:
     - merge_requests
 
@@ -54,16 +44,27 @@ docker:
 deploy-stack:
   extends: .template-deploy-stack
   variables:
-    DOMAIN: ldapain.papierpain.fr
     VERSION: "${VERSION}"
+    ENVIRONMENT: staging
+    DOMAIN: dev.ldapain.papierpain.fr
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  resource_group: ${ENVIRONMENT}
   environment:
-    name: production
-    url: https://ldapain.papierpain.fr
+    name: ${ENVIRONMENT}
+    url: https://${DOMAIN}
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: never
+    - if: $CI_PIPELINE_SOURCE == "web" && ( $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/ )
+      variables:
+        ENVIRONMENT: production
+        DOMAIN: ldapain.papierpain.fr
+    - if: $CI_PIPELINE_SOURCE == "web"
+      variables:
+        ENVIRONMENT: staging
+        DOMAIN: dev.ldapain.papierpain.fr
   needs:
     - job: prepare
       artifacts: true
     - job: docker
-  except:
-    - merge_requests

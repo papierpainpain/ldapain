@@ -4,12 +4,12 @@
 
 Site web de gestion de comptes LDAP.
 
-**LDAPain** se divise en deux partie :
+**LDAPain** se divise en deux parties :
 
 -   Les **API** (serveur) : Qui gère les routes pour accéder aux fonctionnalities de ldap (en PHP) ;
 -   Et le **Client** : L'interface web qui permet de gérer les comptes LDAP (en React).
 
-## Développement
+## Développement (Docker)
 
 Clonez le projet puis suivez les instructions suivantes pour **docker** :
 

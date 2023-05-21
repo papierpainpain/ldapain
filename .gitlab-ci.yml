@@ -1,5 +1,5 @@
 variables:
-  PIPELINE_NAME: Deploy LDAPain
+  PIPELINE_NAME: Exécution (╯°□°）╯︵ ┻━┻
 
 ############################
 ## JOBS
@@ -21,6 +21,20 @@ include:
 workflow:
   name: $PIPELINE_NAME
   rules:
-    - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
+    # Merge request
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      variables:
+        PIPELINE_NAME: "[MR] Check : $CI_COMMIT_REF_NAME"
+    # Manual on master
+    - if: $CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      variables:
+        PIPELINE_NAME: "[PROD] Deploy LATEST"
+    # Manual on tags
+    - if: $CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/
+      variables:
+        PIPELINE_NAME: "[PROD] Deploy $CI_COMMIT_TAG"
+    # Manual in development mode
+    - if: $CI_PIPELINE_SOURCE == "web"
+      variables:
+        PIPELINE_NAME: "[DEV] Deploy STAGING"
     - when: never

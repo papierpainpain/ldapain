@@ -3,10 +3,10 @@
 #####################################
 
 .merge-request:
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:17.9-alpine
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:18.15-alpine
   cache:
     paths:
-      - node_modules
+      - web/node_modules
   only:
     - merge_requests
 
@@ -18,12 +18,14 @@ install-react:
   extends: .merge-request
   stage: build
   script:
+    - cd web
     - npm install
 
 lint-code:
   extends: .merge-request
   stage: test
   before_script:
+    - cd web
     - npm install eslint
   script:
     - npm run lint
