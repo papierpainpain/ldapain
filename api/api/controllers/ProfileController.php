@@ -5,6 +5,7 @@ namespace Api\Controllers;
 use Api\Models\Api;
 use Api\Models\Auth;
 use Api\Models\Ldap\User;
+use Api\Models\Ldap\Group;
 
 use Api\Models\Errors\LdapException;
 use Api\Models\Mail;
@@ -59,11 +60,13 @@ class ProfileController
             if (self::checkEqual($user, $userAuth)) {
                 try {
                     $ldap->updateUser($user['dn'], $params['sn'], $params['cn'], $user['mail']);
-
                     $token = Auth::setToken($userAuth, $params['sn'], $params['cn']);
 
                     if ($token) {
-                        Api::success(201, ['token' => $token]);
+                        Api::success(201, [
+                            'token' => $token,
+                            'user' => $user
+                        ]);
                     } else {
                         Api::error(401, 'Erreur lors de la génération du token');
                     }
@@ -178,7 +181,10 @@ class ProfileController
                         $token = $auth->generateToken();
 
                         if ($token) {
-                            Api::success(201, ['token' => $token]);
+                            Api::success(201, [
+                                'token' => $token,
+                                'user' => $user
+                            ]);
                         } else {
                             Api::error(401, 'Erreur lors de la génération du token');
                         }

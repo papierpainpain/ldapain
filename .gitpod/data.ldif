@@ -1,0 +1,70 @@
+dn: dc=chocolat,dc=fr
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: chocolat.fr
+dc: chocolat
+
+dn: cn=admin,dc=chocolat,dc=fr
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: admin
+description: LDAP administrator
+userPassword: {SSHA}gc6ufN47jtrzOOEMeOwMuxPCAjsmLWfL
+
+dn: ou=users,dc=chocolat,dc=fr
+objectClass: organizationalUnit
+ou: users
+
+dn: ou=groups,dc=chocolat,dc=fr
+objectClass: organizationalUnit
+objectClass: top
+ou: groups
+
+dn: cn=ppolicy,dc=chocolat,dc=fr
+objectClass: device
+objectClass: pwdPolicyChecker
+objectClass: pwdPolicy
+cn: ppolicy
+pwdAllowUserChange: TRUE
+pwdAttribute: userPassword
+pwdCheckQuality: 2
+pwdExpireWarning: 600
+pwdFailureCountInterval: 30
+pwdGraceAuthNLimit: 5
+pwdInHistory: 5
+pwdLockout: TRUE
+pwdLockoutDuration: 0
+pwdMaxAge: 0
+pwdMaxFailure: 5
+pwdMinAge: 0
+pwdMinLength: 8
+pwdMustChange: FALSE
+pwdSafeModify: FALSE
+
+dn: uid=Banane,ou=users,dc=chocolat,dc=fr
+objectClass: top
+objectClass: person
+objectClass: inetOrgPerson
+cn: Boum
+sn: Banane
+mail: Banane@chocolat.fr
+uid: Banane
+userPassword: {SSHA}Zdc2W1ENsvqZDUxxBpRdy62OXu/+HIZv
+memberOf: cn=admin,ou=groups,dc=chocolat,dc=fr
+
+dn: uid=Patate,ou=users,dc=chocolat,dc=fr
+objectClass: top
+objectClass: person
+objectClass: inetOrgPerson
+cn: Boum
+sn: Patate
+mail: Patate@chocolat.fr
+uid: Patate
+userPassword: {SSHA}ZgMeH8V70fu40GkGs0z3bsAI3jt77OST
+
+dn: cn=admin,ou=groups,dc=chocolat,dc=fr
+objectClass: top
+objectClass: groupOfNames
+cn: admin
+member: uid=Banane,ou=users,dc=chocolat,dc=fr

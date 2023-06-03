@@ -9,7 +9,7 @@
 |
 */
 
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 
 // *** API HEADERS *** //
 setlocale(LC_ALL, 'fr_FR.UTF8');

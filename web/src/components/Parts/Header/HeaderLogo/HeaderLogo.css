@@ -1,48 +1,48 @@
 .headerLogo {
-    width: 100%;
-    display: flex;
-    margin-bottom: 1.8em;
+  width: 100%;
+  display: flex;
+  margin-bottom: 1.8em;
 }
 
 .headerLogo .caption {
-    text-align: center;
-    font-size: 1.2em;
-    width: 100%;
+  text-align: center;
+  font-size: 1.2em;
+  width: 100%;
 }
 
 .headerLogo .figure {
-    max-width: 120px;
-    margin: auto;
-    width: 100%;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
+  max-width: 120px;
+  margin: auto;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .headerLogo .image {
-    padding: 0 1.4em;
-    width: calc(100% - 2.8em);
-    height: auto;
+  padding: 0 1.4em;
+  width: calc(100% - 2.8em);
+  height: auto;
 }
 
 @media screen and (max-width: 950px) {
-    .headerLogo {
-        width: auto;
-        height: auto;
-        margin: 0;
-    }
+  .headerLogo {
+    width: auto;
+    height: auto;
+    margin: 0;
+  }
 
-    .headerLogo .figure {
-        width: auto;
-        margin: 0;
-    }
+  .headerLogo .figure {
+    width: auto;
+    margin: 0;
+  }
 
-    .headerLogo .caption {
-        display: none;
-    }
+  .headerLogo .caption {
+    display: none;
+  }
 
-    .headerLogo .image {
-        width: calc(4em);
-        padding: 0;
-    }
+  .headerLogo .image {
+    width: calc(4em);
+    padding: 0;
+  }
 }

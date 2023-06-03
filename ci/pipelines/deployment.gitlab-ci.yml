@@ -28,18 +28,39 @@ frontend:
     - merge_requests
 
 docker:
-  extends: .template-build-docker
+  stage: build
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:23.0.1-git
+  services:
+    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:23.0.1-dind
+      alias: docker
   variables:
-    VERSION: "${VERSION}"
-    DOCKERFILE: "ci/Dockerfile.prod"
+    PLATFORMS: "linux/amd64,linux/arm64"
+    DOCKERFILE: ci/Dockerfile
     BUILD_PATH: "."
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker run --privileged --rm tonistiigi/binfmt --install all
+    - docker buildx create --use --name multi-arch-builder --driver-opt network=host --driver-opt image=moby/buildkit:v0.10.6
+  script:
+    - docker buildx build --platform ${PLATFORMS} ${TAGS} -f ${DOCKERFILE} --push ${BUILD_PATH}
+  after_script:
+    - docker logout
+    - docker buildx rm multi-arch-builder
+  rules: # Tags de l'image
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event" && $VERSION =~ /^[0-9]+\.[0-9]+\.[0-9]+$/
+      variables:
+        TAGS: -t $CI_REGISTRY_IMAGE:${VERSION} -t $CI_REGISTRY_IMAGE:stable
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event" && $VERSION != ""
+      variables:
+        TAGS: -t $CI_REGISTRY_IMAGE/test:${VERSION}
+    - if: $CI_PIPELINE_SOURCE != "merge_request_event" && $CI_COMMIT_REF_NAME == "master"
+      variables:
+        TAGS: -t $CI_REGISTRY_IMAGE:latest
   needs:
     - job: prepare
       artifacts: true
     - job: frontend
       artifacts: true
-  except:
-    - merge_requests
 
 deploy-stack:
   extends: .template-deploy-stack

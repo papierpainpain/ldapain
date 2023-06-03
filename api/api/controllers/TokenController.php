@@ -4,6 +4,8 @@ namespace Api\Controllers;
 
 use Api\Models\Api;
 use Api\Models\Auth;
+use Api\Models\Ldap\User;
+use Api\Models\Ldap\Group;
 
 
 /**
@@ -49,7 +51,14 @@ class TokenController
             $token = $authObj->generateToken();
 
             if ($token) {
-                Api::success(201, ['token' => $token]);
+
+                $userObj = new User($_ENV['LDAP_ADMIN_USER'], $_ENV['LDAP_ADMIN_PASS']);
+                $user = $userObj->getUserById($params['uid']);
+
+                Api::success(201, [
+                    'token' => $token,
+                    'user' => $user
+                ]);
             } else {
                 Api::error(401, 'Impossible de créer le token');
             }

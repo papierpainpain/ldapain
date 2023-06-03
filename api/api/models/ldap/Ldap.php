@@ -37,7 +37,14 @@ class Ldap
           $conn = ldap_connect($server, $port);
           ldap_set_option($conn, LDAP_OPT_PROTOCOL_VERSION, 3);
           ldap_set_option($conn, LDAP_OPT_REFERRALS, 0);
-          ldap_set_option($conn, LDAP_OPT_NETWORK_TIMEOUT, 10); 
+          ldap_set_option($conn, LDAP_OPT_NETWORK_TIMEOUT, 10);
+
+          // var_dump("======= START");
+          // var_dump($server);
+          // var_dump($port);
+          // var_dump($login);
+          // var_dump($pwd);
+          // var_dump("======= END");
 
           if (!$conn) {
                throw new MyException('Impossible de se connecter au serveur LDAP', 500);

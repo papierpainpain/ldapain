@@ -1,55 +1,55 @@
 .mainContainer {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
 }
 
 .mainContainer main {
-    padding: 2em;
-    display: flex;
-    flex-direction: column;
-    width: calc(100% - 4em);
-    overflow: auto;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 4em);
+  overflow: auto;
 }
 
 .mainContainer main section {
-    width: 100%;
-    height: 100%;
-    display: flex;
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 
 .mainContainer main section .block {
-    background-color: var(--header-alpha);
-    box-shadow: rgba(7, 7, 6, 0.15) 0px 0.5rem 1rem;
-    margin: 0 auto auto;
-    padding: 2em;
-    width: calc(100% - 4em);
-    height: auto;
-    max-width: 680px;
+  background-color: var(--header-alpha);
+  box-shadow: rgba(7, 7, 6, 0.15) 0px 0.5rem 1rem;
+  margin: 0 auto auto;
+  padding: 2em;
+  width: calc(100% - 4em);
+  height: auto;
+  max-width: 680px;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .mainContainer main section .block.blockTable {
-    overflow: auto;
-    min-height: calc(80% - 4em);
+  overflow: auto;
+  min-height: calc(80% - 4em);
 }
 
 @media screen and (max-width: 950px) {
-    .mainContainer main {
-        padding: 1em;
-        width: calc(100% - 2em);
-        overflow-y: auto;
-    }
+  .mainContainer main {
+    padding: 1em;
+    width: calc(100% - 2em);
+    overflow-y: auto;
+  }
 
-    .mainContainer {
-        flex-direction: column;
-    }
+  .mainContainer {
+    flex-direction: column;
+  }
 
-    .mainContainer main section {
-        margin: 4em 0;
-        height: auto;
-    }
+  .mainContainer main section {
+    margin: 4em 0;
+    height: auto;
+  }
 }

@@ -1,46 +1,46 @@
 header.headerDesktop {
-    width: calc(100% - 2em);
-    max-width: calc(300px - 2em);
-    height: calc(100% - 2em);
+  width: calc(100% - 2em);
+  max-width: calc(300px - 2em);
+  height: calc(100% - 2em);
 
-    background-color: var(--header-alpha);
-    box-shadow: rgba(7, 7, 6, 0.15) 0px 0.5rem 1rem;
+  background-color: var(--header-alpha);
+  box-shadow: rgba(7, 7, 6, 0.15) 0px 0.5rem 1rem;
 
-    padding: 1em;
+  padding: 1em;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 header.headerDesktop .headerGif {
-    overflow: hidden;
-    margin: 1em;
-    max-height: 140px;
+  overflow: hidden;
+  margin: 1em;
+  max-height: 140px;
 }
 
 header.headerDesktop .headerGif figure {
-    height: 100%;
-    width: auto;
+  height: 100%;
+  width: auto;
 }
 
 header.headerMobile {
-    align-items: center;
-    width: calc(100% - 2em);
+  align-items: center;
+  width: calc(100% - 2em);
 
-    background-color: var(--header-alpha);
-    box-shadow: rgba(7, 7, 6, 0.15) 0px 0.5rem 1rem;
+  background-color: var(--header-alpha);
+  box-shadow: rgba(7, 7, 6, 0.15) 0px 0.5rem 1rem;
 
-    padding: 1em;
+  padding: 1em;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 header.headerMobile .buttonLink {
-    width: auto;
-    height: auto;
-    display: block;
-    margin: 0;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0;
 }

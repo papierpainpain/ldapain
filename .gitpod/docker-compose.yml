@@ -1,0 +1,51 @@
+version: "3"
+
+name: papierlab
+
+services:
+  ldap:
+    image: registry.papierpain.fr/docker/openldap/test:3-ca-marche-toujours-paaaaaas
+    environment:
+      - LDAP_ROOT=dc=chocolat,dc=fr
+      - LDAP_ADMIN_USERNAME=admin
+      - LDAP_ADMIN_PASSWORD=Password
+    ports:
+      - 389:389
+    volumes:
+      - ./data.ldif:/openldap/ldifs/data.ldif
+  api:
+    image: registry.papierpain.fr/docker/alpine-php81-nginx/test:2-mise-a-jour-du-gitlab-ci
+    environment:
+      - APP_ENV=dev
+      - APP_NAME=LDAPain
+      - API_BASE=api/
+
+      - LDAP_HOST=ldap
+      - LDAP_PORT=389
+      - LDAP_ADMIN_USER=cn=admin,dc=chocolat,dc=fr
+      - LDAP_ADMIN_PASS=Password
+      - LDAP_USERS_BASE=ou=users,dc=chocolat,dc=fr
+      - LDAP_GROUPS_BASE=ou=groups,dc=chocolat,dc=fr
+      - LDAP_ADMIN_GROUP=admin
+
+      - SMTP_HOST=smtp-mail.outlook.com
+      - SMTP_PORT=587
+      - SMTP_USER=contact@chocolat.fr
+      - SMTP_PASS=bam
+
+      - JWT_SECRET=boum
+      - JWT_ALGORITHM=HS256
+      - JWT_ISSUER=LDAPain
+      - JWT_AUDIENCE=LDAPain
+    ports:
+      - 9000:80
+    links:
+      - ldap
+    volumes:
+      - ./nginx.conf:/etc/nginx/http.d/default.conf
+      - ./www.conf:/etc/php81/php-fpm.d/www.conf
+      - ../api:/ldapain-api
+  swagger:
+    image: swaggerapi/swagger-ui
+    ports:
+      - 9001:8080

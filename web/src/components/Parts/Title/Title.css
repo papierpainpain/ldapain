@@ -1,25 +1,25 @@
 .title {
-    display: block;
-    width: 100%;
-    margin: auto;
-    text-decoration: none;
+  display: block;
+  width: 100%;
+  margin: auto;
+  text-decoration: none;
 }
 
 .title #navbrand-green {
-    font-weight: bold;
-    font-size: 0.8em;
-    color: var(--main);
+  font-weight: bold;
+  font-size: 0.8em;
+  color: var(--main);
 }
 
 .title #navbrand-white {
-    font-weight: bold;
-    font-size: 0.6em;
-    color: white;
-    align-self: end;
+  font-weight: bold;
+  font-size: 0.6em;
+  color: white;
+  align-self: end;
 }
 
 .title #navbrand-orange {
-    color: var(--second);
-    font-size: 0.4em;
-    align-self: end;
+  color: var(--second);
+  font-size: 0.4em;
+  align-self: end;
 }

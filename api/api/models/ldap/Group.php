@@ -28,14 +28,14 @@ class Group extends Unit
         return $groups;
     }
 
-    public function getGroupById(string $gid): array
+    public function getGroupById(string $gid): array | null
     {
         $group = parent::getLdap()->search($_ENV['LDAP_GROUPS_BASE'], '(cn=' . $gid . ')', $this->unitAttributes);
         $group = $this->entriesToArray($group);
         return $group[0] ?? null;
     }
 
-    public function getGroupByDn($dn): array
+    public function getGroupByDn($dn): array | null
     {
         $group = parent::getLdap()->search($dn, '(cn=*)', $this->unitAttributes);
         $group = $this->entriesToArray($group);

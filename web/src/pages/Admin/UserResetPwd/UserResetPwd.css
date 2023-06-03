@@ -1,29 +1,29 @@
 .userResetPwdContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .userResetPwdContainer button:hover {
-    background-color: var(--second);
+  background-color: var(--second);
 }
 
 .userResetPwdContainer button {
-    background-color: var(--main);
-    color: var(--white);
-    padding: 1em 0.8em;
-    border: none;
-    border-radius: 0.4em;
-    font-size: 1em;
-    transition: background-color 0.15s ease-in-out;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
-    margin: 1em;
+  background-color: var(--main);
+  color: var(--white);
+  padding: 1em 0.8em;
+  border: none;
+  border-radius: 0.4em;
+  font-size: 1em;
+  transition: background-color 0.15s ease-in-out;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  margin: 1em;
 }
 
 @media screen and (max-width: 950px) {
-    .userResetPwdContainer {
-        flex-direction: column;
-    }
+  .userResetPwdContainer {
+    flex-direction: column;
+  }
 }

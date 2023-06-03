@@ -1,50 +1,50 @@
 div.profileTop {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 div.profileTop .profileIcon {
-    margin: 1em;
-    height: 80px;
-    width: 80px;
-    color: var(--main);
+  margin: 1em;
+  height: 80px;
+  width: 80px;
+  color: var(--main);
 }
 
 div.profileTop h2 {
-    margin: 0;
-    padding: 0;
-    color: var(--main);
+  margin: 0;
+  padding: 0;
+  color: var(--main);
 }
 
 div.profileTop p {
-    margin: 0;
-    margin-top: 0.8em;
-    color: var(--lightGray);
+  margin: 0;
+  margin-top: 0.8em;
+  color: var(--lightGray);
 }
 
 div.profileTop span {
-    color: var(--second);
-    font-style: italic;
-    font-size: 0.8em;
+  color: var(--second);
+  font-style: italic;
+  font-size: 0.8em;
 }
 
 @media screen and (max-width: 950px) {
-    div.profileTop .profileIcon {
-        height: 40px;
-        width: 40px;
-        margin: 0;
-    }
+  div.profileTop .profileIcon {
+    height: 40px;
+    width: 40px;
+    margin: 0;
+  }
 
-    div.profileTop .profileContent {
-        display: flex;
-        flex-direction: column;
-        width: calc(100% - 40px - 0.8em);
-        padding-left: 0.8em;
-    }
+  div.profileTop .profileContent {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 40px - 0.8em);
+    padding-left: 0.8em;
+  }
 
-    div.profileTop .profileContent > * {
-        margin: 0;
-        word-wrap: break-word;
-    }
+  div.profileTop .profileContent > * {
+    margin: 0;
+    word-wrap: break-word;
+  }
 }

@@ -1,104 +1,102 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
 :root {
-    --main: #009384;
-    --second: #fa0;
-    --white: #e5e5e5;
-    --gray: #495057;
-    --darkGray: #2e303e;
-    --lightGray: #959595;
-    --background: #2e303e;
-    --header: #1c1d26;
-    --header-alpha: #1c1d26a3;
-    --header-height: 80px;
-    --green: #009384;
-    --red: #d96565;
-    --mobile-width: 950px;
+  --main: #009384;
+  --second: #fa0;
+  --white: #e5e5e5;
+  --gray: #495057;
+  --darkGray: #2e303e;
+  --lightGray: #959595;
+  --background: #2e303e;
+  --header: #1c1d26;
+  --header-alpha: #1c1d26a3;
+  --header-height: 80px;
+  --green: #009384;
+  --red: #d96565;
+  --mobile-width: 950px;
 }
 
 html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    background-color: var(--background) !important;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--background) !important;
 
-    font-family: 'Cairo', sans-serif;
-    line-height: 1.2;
+  font-family: 'Cairo', sans-serif;
+  line-height: 1.2;
 }
 
 body {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    color: var(--white) !important;
-    background-color: var(--background) !important;
-    background: url(../public/images/background_mobile.png) no-repeat
-        center top !important;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  color: var(--white) !important;
+  background-color: var(--background) !important;
+  background: url(../public/images/background_mobile.png) no-repeat center top !important;
 
-    overflow: hidden;
+  overflow: hidden;
 }
 
 body > div {
-    padding: 0;
-    height: 100%;
-    width: 100%;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 h1 {
-    margin-top: 0;
-    margin-bottom: 1.8em;
-    font-weight: 500;
-    line-height: 1.2;
-    font-size: 2.2em;
+  margin-top: 0;
+  margin-bottom: 1.8em;
+  font-weight: 500;
+  line-height: 1.2;
+  font-size: 2.2em;
 }
 
 h1:after {
-    content: '';
-    display: block;
-    width: 100px;
-    height: 4px;
-    background-color: var(--second);
-    margin-top: 0.5rem;
+  content: '';
+  display: block;
+  width: 100px;
+  height: 4px;
+  background-color: var(--second);
+  margin-top: 0.5rem;
 }
 
 .buttonLink {
-    display: inline-block;
-    text-decoration: none;
-    background-color: var(--second);
-    border-color: var(--second);
-    color: var(--header);
-    margin: 1em;
-    border: 1px solid transparent;
-    padding: 1em 0.8em;
-    font-size: 1em;
-    border-radius: 0.25rem;
-    transition: color 0.15s ease-in-out,
-        background-color 0.15s ease-in-out,
-        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    cursor: pointer;
-    text-align: center;
-    font-weight: 400;
+  display: inline-block;
+  text-decoration: none;
+  background-color: var(--second);
+  border-color: var(--second);
+  color: var(--header);
+  margin: 1em;
+  border: 1px solid transparent;
+  padding: 1em 0.8em;
+  font-size: 1em;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 400;
 }
 
 .buttonLink:hover {
-    background-color: var(--main);
-    border-color: var(--main);
-    color: var(--white);
+  background-color: var(--main);
+  border-color: var(--main);
+  color: var(--white);
 }
 
 @media screen and (max-width: 950px) {
-    h1 {
-        font-size: 1.8em;
-    }
-    
-    h1:after {
-        height: 2px;
-    }
+  h1 {
+    font-size: 1.8em;
+  }
+
+  h1:after {
+    height: 2px;
+  }
 }

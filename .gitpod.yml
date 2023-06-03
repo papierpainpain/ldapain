@@ -1,0 +1,15 @@
+image: gitpod/workspace-full
+
+tasks:
+  - name: WEB
+    before: cd web
+    init: npm install
+    command: npm run start
+  - name: LDAP
+    command: docker-compose -f .gitpod/docker-compose.yml up -d
+
+ports:
+  - port: 3000
+    onOpen: open-preview
+    name: LDAPain
+    description: LDAPain website

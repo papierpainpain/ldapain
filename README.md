@@ -9,35 +9,25 @@ Site web de gestion de comptes LDAP.
 -   Les **API** (serveur) : Qui gère les routes pour accéder aux fonctionnalities de ldap (en PHP) ;
 -   Et le **Client** : L'interface web qui permet de gérer les comptes LDAP (en React).
 
-## Développement (Docker)
+## Développement
 
 Clonez le projet puis suivez les instructions suivantes pour **docker** :
 
 -   Installez docker et docker compose avec le [lien ici](https://docs.docker.com/engine/install/) ;
--   Ajoutez le fichier de configuration des variables de l'environnement (`.env.local`) :
+-   Installez node v18.16.0 ;
+-   Ajoutez le fichier de configuration des variables de l'environnement (`web/.env.development.local`) :
 
     ```conf
-    APP_ENV="dev"
-
-    LDAP_HOST="<votre-ldap-host>"
-    LDAP_USERS_BASE="<votre-ldap-users-base>"
-    LDAP_GROUPS_BASE="<votre-ldap-groups-base>"
-
-    LDAP_ADMIN_USER="<votre-ldap-admin-user>"
-    LDAP_ADMIN_PASS="<votre-ldap-admin-pass>"
-
-    SMTP_HOST="smtp-mail.outlook.com"
-    SMTP_PORT="587"
-    SMTP_USER="<votre-mail>"
-    SMTP_PASS="<votre-mot-de-passe>"
-
-    JWT_SECRET="<votre-secret>"
-    JWT_AUDIENCE="ldapain.papierpain.fr"
+    # NOTE: THIS IS DANGEROUS!
+    # It exposes your machine to attacks from the websites you visit.
+    DANGEROUSLY_DISABLE_HOST_CHECK=true
     ```
 
--   Puis dans le dossier du projet exécutez les commandes suivantes :
+    Pour avoir quelque chose de plus propre voir ici : [create-react-app.dev](https://create-react-app.dev/docs/proxying-api-requests-in-development/#invalid-host-header-errors-after-configuring-proxy)
+
+-   Puis exécutez les commandes suivantes :
 
     ```bash
-    docker-compose up --build -d # Build et démarre le serveur docker
-    docker-compose up -d # Démarre le serveur docker seulement
+    docker-compose -f .gitpod/docker-compose.yml up -d # Démarre le serveur docker pour l'API
+    cd web && npm install && npm run start # Démarre le serveur web
     ```
